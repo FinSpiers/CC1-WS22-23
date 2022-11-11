@@ -3,11 +3,10 @@ package com.example.myweather.feature_weather.presentation
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.myweather.ui.theme.MyWeatherTheme
@@ -30,14 +29,39 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String, ) {
+fun Greeting(name: String) {
     Text(text = "Hello $name!")
+}
+
+@Composable
+fun ShowButtonBar(modifier: Modifier = Modifier) {
+    Column(
+        Modifier
+            .fillMaxWidth()
+    ) {
+        Row(
+            Modifier
+                .fillMaxWidth()
+                .align(Alignment.CenterHorizontally)
+                .weight(1f)) {
+            Button(onClick = { /*TODO*/ }) {
+                Text(text = "Test1")
+            }
+            Button(onClick = { /*TODO*/ }) {
+                Text(text = "Test2")
+            }
+            Button(onClick = { /*TODO*/ }) {
+                Text(text = "Test3")
+            }
+        }
+    }
+    modifier.fillMaxWidth()
 }
 
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     MyWeatherTheme {
-        Greeting("Android")
+        ShowButtonBar()
     }
 }
