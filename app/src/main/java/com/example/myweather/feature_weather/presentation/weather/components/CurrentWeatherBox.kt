@@ -13,6 +13,7 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -20,8 +21,9 @@ import com.example.myweather.R
 import com.example.myweather.ui.theme.MyWeatherTheme
 
 @Composable
-fun WeatherInfoBox(
+fun CurrentWeatherBox(
     currentTemperature: Double,
+    feelsLike : Double,
     isCelsius: Boolean,
     painter: Painter,
     weatherDescription: String,
@@ -71,6 +73,14 @@ fun WeatherInfoBox(
             modifier = Modifier.padding(vertical = 16.dp)
         )
         Spacer(modifier = Modifier.height(8.dp))
+        Text(
+            text = "Feels like " + feelsLike.toString() + if(isCelsius) "°C" else "°F",
+            textAlign = TextAlign.Center,
+            style = MaterialTheme.typography.titleMedium,
+            fontStyle = FontStyle.Italic,
+            color = MaterialTheme.colorScheme.primary
+        )
+        Spacer(modifier = Modifier.height(8.dp))
     }
 }
 
@@ -78,8 +88,9 @@ fun WeatherInfoBox(
 @Composable
 fun WeatherInfoBoxPreview() {
     MyWeatherTheme {
-        WeatherInfoBox(
+        CurrentWeatherBox(
             currentTemperature = -1.5,
+            feelsLike = -2.5,
             isCelsius = true,
             painter = painterResource(id = R.drawable.image_weather_cloudy),
             weatherDescription = "No discription available"

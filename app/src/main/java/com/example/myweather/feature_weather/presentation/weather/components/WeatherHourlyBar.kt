@@ -10,15 +10,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.myweather.R
 import com.example.myweather.ui.theme.MyWeatherTheme
 
 
 val hours = listOf(0..23)
+
+
 
 @Composable
 fun WeatherHourlyBar(
@@ -28,7 +33,7 @@ fun WeatherHourlyBar(
 ) {
     assert(weatherData.size == 24)
     Column(
-        modifier = Modifier.fillMaxWidth()
+        modifier = modifier.fillMaxWidth()
     ) {
         Row(
             modifier = Modifier
@@ -42,7 +47,7 @@ fun WeatherHourlyBar(
                     .padding(vertical = 4.dp),
                 textAlign = TextAlign.Center,
                 fontFamily = FontFamily.Serif,
-                style = MaterialTheme.typography.titleLarge
+                style = MaterialTheme.typography.titleMedium
             )
         }
         LazyRow(modifier = Modifier.fillMaxWidth()) {
@@ -51,36 +56,6 @@ fun WeatherHourlyBar(
                     WeatherListElement(time = i, temperature = weatherData[i], isCelsius = isCelsius)
                 }
             }
-        }
-    }
-}
-
-@Composable
-fun WeatherListElement(
-    time : Int,
-    temperature : Double,
-    isCelsius : Boolean
-){
-    Column (
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
-        modifier = Modifier.border(1.dp, MaterialTheme.colorScheme.primary)) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center,
-            modifier = Modifier.padding(8.dp)
-        ) {
-            Text(
-                text = if (time < 10) "0${time}:00" else "${time}:00",
-                style = MaterialTheme.typography.bodyMedium
-            )
-        }
-        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center, modifier = Modifier.padding(8.dp)) {
-            Text(
-                text = "$temperature" + if (isCelsius) "°C" else "°F",
-                style = MaterialTheme.typography.titleMedium,
-                fontStyle = FontStyle.Italic
-                )
         }
     }
 }
