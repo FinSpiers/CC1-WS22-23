@@ -27,7 +27,7 @@ fun LocationBar(
 
     ) {
     Column(
-        modifier = modifier.padding(16.dp),
+        modifier = modifier.padding(8.dp),
         verticalArrangement = Arrangement.Center
     ) {
         Surface(
@@ -52,7 +52,7 @@ fun LocationBar(
                     text = locationName,
                     style = MaterialTheme.typography.headlineSmall,
                     modifier = modifier
-                        .padding(horizontal = 8.dp, vertical = 4.dp)
+                        .padding(horizontal = 4.dp, vertical = 4.dp)
                         .weight(1f),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
@@ -63,7 +63,7 @@ fun LocationBar(
         Row(
             modifier = modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp),
+                .padding(bottom = 16.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Start
         ) {
