@@ -1,47 +1,49 @@
 package com.example.myweather.core.presentation
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.Surface
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.myweather.feature_environmental_data.presentation.EnvironmentDataScreen
-import com.example.myweather.feature_weather.presentation.weather.WeatherScreen
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.example.myweather.core.presentation.components.BottomNavigationBar
+import com.example.myweather.core.presentation.util.NavigationSetup
+import com.example.myweather.core.presentation.util.Screen
 import com.example.myweather.ui.theme.MyWeatherTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@ExperimentalMaterial3Api
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            ShowWeatherScreen()
+            val navController = rememberNavController()
+            MyApp(navController)
         }
     }
 
+
+
     @Composable
-    fun ShowEnvironmentalDataScreen(){
+    fun MyApp(navController: NavHostController) {
         MyWeatherTheme {
-            Surface(modifier = Modifier.fillMaxSize()) {
-                EnvironmentDataScreen()
+            Surface {
+                Scaffold(
+                    bottomBar = { BottomNavigationBar(navController = navController, route = Screen.WeatherScreen.route) }
+                ) {
+                    NavigationSetup(navController = navController)
+                }
             }
         }
     }
-
-    @Composable
-    fun ShowWeatherScreen() {
-        MyWeatherTheme {
-            Surface(modifier = Modifier.fillMaxSize()) {
-                WeatherScreen()
-            }
-        }
-    }
-
 
     @Preview(showBackground = true)
     @Composable
     fun DefaultPreview() {
-        WeatherScreen()
+        MyApp(rememberNavController())
     }
 }
