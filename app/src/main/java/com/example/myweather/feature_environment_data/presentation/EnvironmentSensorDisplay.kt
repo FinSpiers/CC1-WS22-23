@@ -1,4 +1,4 @@
-package com.example.myweather.feature_environmental_data.presentation.components
+package com.example.myweather.feature_environment_data.presentation.components
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*

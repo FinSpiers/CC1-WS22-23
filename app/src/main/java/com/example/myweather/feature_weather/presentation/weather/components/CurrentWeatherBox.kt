@@ -33,7 +33,7 @@ fun CurrentWeatherBox(
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp)
+            .padding(horizontal = 8.dp)
             .border(3.dp, MaterialTheme.colorScheme.primaryContainer, RectangleShape),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
@@ -63,7 +63,8 @@ fun CurrentWeatherBox(
 
         Image(
             painter = painter,
-            contentDescription = "Default weather description"
+            contentDescription = "Default weather description",
+            modifier = Modifier.size(150.dp)
         )
 
         Text(
