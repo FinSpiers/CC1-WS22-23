@@ -13,7 +13,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.myweather.R
 import com.example.myweather.core.domain.Settings
+import com.example.myweather.feature_weather.data.data_source.database.CurrentWeatherDataDao
 import com.example.myweather.feature_weather.data.data_source.network.OpenWeatherApiService
+import com.example.myweather.feature_weather.domain.model.CurrentWeatherData
 import com.example.myweather.feature_weather.domain.util.TimestampDatetimeConverter
 import com.example.myweather.feature_weather.domain.util.WindDegreeConverter
 import com.example.myweather.feature_weather.presentation.weather.components.LocationBar
@@ -33,36 +35,38 @@ fun WeatherScreen(
     // TODO: delete later
     val apiService = OpenWeatherApiService()
 
-    val locationName = remember { mutableStateOf("London") }
-    val dateTime = remember { mutableStateOf("19.11.2022, 09:05") }
+    val locationName = remember { mutableStateOf("") }
+    val dateTime = remember { mutableStateOf("") }
 
-    val currentTemperature = remember { mutableStateOf(-1.5) }
-    val feelsLike = remember { mutableStateOf(-2.5) }
+    val currentTemperature = remember { mutableStateOf(0.0) }
+    val feelsLike = remember { mutableStateOf(0.0) }
 
-    val weatherDescription = remember { mutableStateOf("cloudy") }
+    val weatherDescription = remember { mutableStateOf("") }
 
-    val windSpeed = remember { mutableStateOf(1.54) }
-    val windDirection = remember { mutableStateOf("NE") }
-    val airPressure = remember { mutableStateOf(1017) }
-    val humidity = remember { mutableStateOf(51) }
+    val windSpeed = remember { mutableStateOf(0.0) }
+    val windDirection = remember { mutableStateOf("") }
+    val airPressure = remember { mutableStateOf(0) }
+    val humidity = remember { mutableStateOf(0) }
 
-    val tempMin = remember { mutableStateOf(1.5) }
-    val tempMax = remember { mutableStateOf(3.5) }
+    val tempMin = remember { mutableStateOf(0.0) }
+    val tempMax = remember { mutableStateOf(0.0) }
+
+    val lat = 51.517122
+    val lon = 9.417862
 
     GlobalScope.launch(Dispatchers.Main) {
-        val currentWeatherResponse = apiService.getCurrentWeatherAsync(lat = 51.517122, lon = 9.417862).await()
-
-        locationName.value = currentWeatherResponse.locationName
-        dateTime.value = TimestampDatetimeConverter().convertToDatetime(currentWeatherResponse.dt)
-        currentTemperature.value = currentWeatherResponse.main.temp
-        feelsLike.value = currentWeatherResponse.main.feelsLike
-        weatherDescription.value = currentWeatherResponse.weather[0].description
-        windSpeed.value = currentWeatherResponse.wind.speed
-        windDirection.value = WindDegreeConverter().convertToDirection(currentWeatherResponse.wind.deg)
-        airPressure.value = currentWeatherResponse.main.pressure
-        humidity.value = currentWeatherResponse.main.humidity
-        tempMin.value = currentWeatherResponse.main.tempMin
-        tempMax.value = currentWeatherResponse.main.tempMax
+        val response = apiService.getCurrentWeatherAsync(lat = lat, lon = lon).await()
+        locationName.value = response.locationName
+        dateTime.value = TimestampDatetimeConverter.convertToDatetime(response.dt)
+        currentTemperature.value = response.main.temp
+        feelsLike.value = response.main.feelsLike
+        weatherDescription.value = response.weather[0].description
+        windSpeed.value = response.wind.speed
+        windDirection.value = WindDegreeConverter.convertToDirection(response.wind.deg)
+        airPressure.value = response.main.pressure
+        humidity.value = response.main.humidity
+        tempMin.value = response.main.tempMin
+        tempMax.value = response.main.tempMax
     }
     val isCelsius = Settings().isCelsius
     // TODO: build viewModel with states as above

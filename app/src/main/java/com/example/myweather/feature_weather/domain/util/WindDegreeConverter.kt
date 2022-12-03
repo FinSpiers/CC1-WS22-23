@@ -1,6 +1,6 @@
 package com.example.myweather.feature_weather.domain.util
 
-class WindDegreeConverter {
+object WindDegreeConverter {
     fun convertToDirection(degree: Int): String {
         return when (degree) {
             in 26..64 -> {
