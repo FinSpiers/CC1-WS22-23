@@ -2,8 +2,7 @@ package com.example.myweather.feature_weather.domain.util
 
 import java.time.*
 
-class TimestampDatetimeConverter {
-
+object TimestampDatetimeConverter {
     fun convertToDatetime(timestamp: Int) : String {
         var dateTime = ""
 
