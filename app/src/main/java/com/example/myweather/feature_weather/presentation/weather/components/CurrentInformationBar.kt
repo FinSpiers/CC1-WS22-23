@@ -8,6 +8,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.myweather.R
@@ -24,11 +25,18 @@ fun CurrentInformationBar(
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.SpaceEvenly, modifier = Modifier.fillMaxWidth(0.33f)) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.SpaceEvenly,
+            modifier = Modifier.fillMaxWidth(0.33f)
+        ) {
             Image(
                 painter = painterResource(id = R.drawable.icon_barometer),
+                colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.inverseSurface),
                 contentDescription = null,
-                modifier = Modifier.size(32.dp).padding(top = 4.dp)
+                modifier = Modifier
+                    .size(32.dp)
+                    .padding(top = 4.dp)
             )
             Text(
                 text = "$airPressure hpa",
@@ -37,11 +45,18 @@ fun CurrentInformationBar(
             )
         }
 
-        Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.SpaceEvenly, modifier = Modifier.fillMaxWidth(0.5f)) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.SpaceEvenly,
+            modifier = Modifier.fillMaxWidth(0.5f)
+        ) {
             Image(
                 painter = painterResource(R.drawable.icon_humidity),
+                colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.inverseSurface),
                 contentDescription = null,
-                modifier = Modifier.size(32.dp).padding(top = 4.dp)
+                modifier = Modifier
+                    .size(32.dp)
+                    .padding(top = 4.dp)
             )
             Text(
                 text = "$humidity%",
@@ -53,7 +68,8 @@ fun CurrentInformationBar(
         Column(Modifier.fillMaxWidth()) {
             Row(
                 Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_baseline_arrow_upward_24),
@@ -63,7 +79,8 @@ fun CurrentInformationBar(
             }
             Row(
                 Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(text = if (isCelsius) "${minTemperature}°C" else "${minTemperature}°F")
                 Icon(

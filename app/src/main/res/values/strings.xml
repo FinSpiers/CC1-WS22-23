@@ -3,4 +3,8 @@
     <string name="navigation_title_weather">Weather</string>
     <string name="navigation_title_environment_data">Environment data</string>
     <string name="navigation_title_settings">Settings</string>
+    <string name="ambient_air_temperature">Ambient air temperature</string>
+    <string name="illuminance">Illuminance</string>
+    <string name="ambient_air_pressure">Ambient air pressure</string>
+    <string name="ambient_relative_humidity">Ambient relative humidity</string>
 </resources>

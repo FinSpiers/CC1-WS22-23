@@ -27,13 +27,17 @@ class MainActivity : ComponentActivity() {
     }
 
 
-
     @Composable
     fun MyApp(navController: NavHostController) {
         MyWeatherTheme {
             Surface {
                 Scaffold(
-                    bottomBar = { BottomNavigationBar(navController = navController, route = Screen.WeatherScreen.route) }
+                    bottomBar = {
+                        BottomNavigationBar(
+                            navController = navController,
+                            route = Screen.WeatherScreen.route
+                        )
+                    }
                 ) {
                     NavigationSetup(navController = navController)
                 }

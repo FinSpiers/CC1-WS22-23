@@ -30,8 +30,8 @@ import kotlinx.coroutines.launch
 @SuppressLint("CoroutineCreationDuringComposition")
 @Composable
 fun WeatherScreen(
-        //viewModel: WeatherViewModel = hiltViewModel()
-    ) {
+    //viewModel: WeatherViewModel = hiltViewModel()
+) {
     // TODO: delete later
     val apiService = OpenWeatherApiService()
 
@@ -72,8 +72,9 @@ fun WeatherScreen(
     // TODO: build viewModel with states as above
 
     MyWeatherTheme {
-        Surface(modifier = Modifier
-            .fillMaxSize()
+        Surface(
+            modifier = Modifier
+                .fillMaxSize()
         ) {
             Column(
                 modifier = Modifier.fillMaxSize(),

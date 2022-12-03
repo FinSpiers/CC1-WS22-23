@@ -5,18 +5,16 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.DarkMode
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.myweather.core.domain.Settings
+import com.example.myweather.ui.theme.MyWeatherTheme
 
 @Composable
 fun SettingsScreen() {
@@ -31,14 +29,16 @@ fun SettingsScreen() {
     ) {
         Surface(
             modifier = Modifier.padding(16.dp),
-            color = Color.LightGray,
+            color = MaterialTheme.colorScheme.surface,
             shape = RoundedCornerShape(CornerSize(5.dp)),
-            border = BorderStroke(5.dp, MaterialTheme.colorScheme.primary)
+            border = BorderStroke(5.dp, MaterialTheme.colorScheme.primaryContainer)
 
         ) {
             Column {
                 Row(
-                    modifier = Modifier.fillMaxWidth().background(MaterialTheme.colorScheme.primary),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(MaterialTheme.colorScheme.primaryContainer),
                     horizontalArrangement = Arrangement.Center,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
@@ -85,5 +85,8 @@ fun SettingsScreen() {
 @Preview(showBackground = true)
 @Composable
 fun SettingsScreenPreview() {
-    SettingsScreen()
+    MyWeatherTheme {
+        SettingsScreen()
+    }
+
 }
