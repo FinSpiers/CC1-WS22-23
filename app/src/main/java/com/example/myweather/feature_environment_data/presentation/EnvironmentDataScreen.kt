@@ -53,7 +53,8 @@ fun EnvironmentDataScreen() {
                 id = com.example.myweather.R.drawable.icon_humidity
             )
         )
-        Spacer(modifier = Modifier.height(16.dp))//EnvironmentSensorDisplay(sensor = "Device temperature", sensorData = 35.0, unit = "°C")
+        Spacer(modifier = Modifier.height(16.dp))
+    //EnvironmentSensorDisplay(sensor = "Device temperature", sensorData = 35.0, unit = "°C")
     }
 }
 
@@ -63,7 +64,6 @@ fun EnvironmentDataScreen() {
 fun EnvironmentDataScreenPreview() {
     MyWeatherTheme {
         EnvironmentDataScreen()
-
     }
 }
 
