@@ -6,6 +6,6 @@ class GetWeatherUseCase(
     private val repository: WeatherRepository
 ) {
     suspend operator fun invoke() {
-        repository.getCurrentWeatherData()
+        repository.getCurrentWeatherDataFromDb()
     }
 }

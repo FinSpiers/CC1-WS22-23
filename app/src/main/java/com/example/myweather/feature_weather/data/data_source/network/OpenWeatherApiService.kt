@@ -1,6 +1,7 @@
 package com.example.myweather.feature_weather.data.data_source.network
 
 import com.example.myweather.core.domain.Settings
+import com.example.myweather.feature_weather.data.data_source.network.interceptor.ConnectivityInterceptor
 import com.example.myweather.feature_weather.data.data_source.network.response.CurrentWeatherResponse
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import kotlinx.coroutines.Deferred
@@ -32,7 +33,7 @@ interface OpenWeatherApiService {
     ): Deferred<CurrentWeatherResponse>
 
     companion object {
-        operator fun invoke(): OpenWeatherApiService {
+        operator fun invoke(connectivityInterceptor: ConnectivityInterceptor): OpenWeatherApiService {
             // build request interceptor to pass API-key in every api call
             val requestInterceptor = Interceptor { chain ->
                 val url = chain.request()
@@ -51,6 +52,7 @@ interface OpenWeatherApiService {
             val okHttpClient = OkHttpClient
                 .Builder()
                 .addInterceptor(requestInterceptor)
+                .addInterceptor(connectivityInterceptor)
                 .build()
 
             // return an implementation of OpenWeatherApiService by using retrofit builder
