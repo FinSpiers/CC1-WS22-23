@@ -18,6 +18,8 @@ class ConnectivityInterceptorImpl(context : Context) : ConnectivityInterceptor {
     private fun isOnline(): Boolean {
         val connectivityManager = appContext.getSystemService(Context.CONNECTIVITY_SERVICE)
         as ConnectivityManager
+
+        // TODO: check if correct
         val networkInfo = connectivityManager.activeNetwork
         return networkInfo != null && connectivityManager.isDefaultNetworkActive
 

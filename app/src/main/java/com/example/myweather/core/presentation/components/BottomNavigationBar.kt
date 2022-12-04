@@ -51,7 +51,7 @@ fun BottomNavigationBar(navController: NavController, route: String) {
                 label = { Text(text = item.title, style = MaterialTheme.typography.bodyMedium) },
                 selected = isSelected,
                 onClick = {
-                    if (item.route != currentRoute.value) {
+                    //if (item.route != currentRoute.value) {
                         // Update selection state list
                         for (i in 0..2) {
                             currentNavItemSelection[i] = (item.index == i)
@@ -68,7 +68,7 @@ fun BottomNavigationBar(navController: NavController, route: String) {
                             restoreState = true
                         }
                         currentRoute.value = item.route
-                    }
+                    //}
                 },
                 colors = NavigationBarItemDefaults.colors(
                     selectedIconColor = MaterialTheme.colorScheme.primary,
