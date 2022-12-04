@@ -25,7 +25,7 @@ fun EnvironmentSensorDisplay(sensor: String, sensorData: Double, unit: String, p
             .fillMaxWidth()
             .padding(10.dp)
             .border(
-                width = 2.dp,
+                width = 3.dp,
                 color = MaterialTheme.colorScheme.primaryContainer,
                 shape = RoundedCornerShape(2.dp)
             ),
