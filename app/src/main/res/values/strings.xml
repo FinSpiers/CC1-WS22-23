@@ -9,7 +9,6 @@
     <string name="ambient_air_pressure">Ambient air pressure</string>
     <string name="ambient_relative_humidity">Ambient relative humidity</string>
 
-
     <string name="current_weather">Current weather</string>
     <string name="feels_like">Feels like</string>
     <string name="current_information">Current information</string>
@@ -18,4 +17,13 @@
     <string name="unit">Unit</string>
     <string name="celsius" translatable="false">Celsius</string>
     <string name="fahrenheit" translatable="false">Fahrenheit</string>
+
+    <string name="ne">NE</string>
+    <string name="e">E</string>
+    <string name="se">SE</string>
+    <string name="s">S</string>
+    <string name="sw">SW</string>
+    <string name="w">W</string>
+    <string name="nw">NW</string>
+    <string name="n">N</string>
 </resources>

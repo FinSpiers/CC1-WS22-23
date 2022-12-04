@@ -1,6 +1,8 @@
 package com.example.myweather.feature_weather.data.data_source.network
 
+import android.content.Context
 import android.util.Log
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import com.example.myweather.feature_weather.domain.model.CurrentWeatherData
@@ -9,7 +11,8 @@ import com.example.myweather.feature_weather.domain.util.WindDegreeConverter
 import kotlinx.coroutines.flow.MutableStateFlow
 
 class WeatherNetworkDataSourceImpl(
-    private val openWeatherApiService: OpenWeatherApiService
+    private val openWeatherApiService: OpenWeatherApiService,
+    private val context: Context
 ) : WeatherNetworkDataSource {
     private val _downloadedCurrentWeather = mutableStateOf(CurrentWeatherData())
 
@@ -39,10 +42,12 @@ class WeatherNetworkDataSourceImpl(
                 airPressure = fetchedCurrentWeatherData.main.pressure,
                 humidity = fetchedCurrentWeatherData.main.humidity,
                 windSpeed = fetchedCurrentWeatherData.wind.speed,
-                windDirection = WindDegreeConverter.convertToDirection(fetchedCurrentWeatherData.wind.deg)
+                windDirection = WindDegreeConverter.convertToDirection(
+                    fetchedCurrentWeatherData.wind.deg,
+                    context
+                )
             )
-        }
-        catch (e : NoConnectivityException) {
+        } catch (e: NoConnectivityException) {
             Log.e("Connectivity", "No internet connection", e)
         }
     }

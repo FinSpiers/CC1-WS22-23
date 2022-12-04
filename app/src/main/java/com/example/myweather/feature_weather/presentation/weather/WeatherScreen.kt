@@ -37,7 +37,7 @@ fun WeatherScreen(
     // TODO: delete later
     val apiService =
         OpenWeatherApiService(ConnectivityInterceptorImpl(LocalContext.current))
-    val weatherNetworkDataSource = WeatherNetworkDataSourceImpl(apiService)
+    val weatherNetworkDataSource = WeatherNetworkDataSourceImpl(apiService, LocalContext.current)
     val currentWeatherData = remember { weatherNetworkDataSource.downloadedCurrentWeather }
 
     val lat = 51.517122

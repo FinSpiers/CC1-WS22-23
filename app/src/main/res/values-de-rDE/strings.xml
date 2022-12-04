@@ -17,4 +17,13 @@
     <string name="wind">Wind</string>
 
     <string name="unit">Einheit</string>
+
+    <string name="ne">NO</string>
+    <string name="e">O</string>
+    <string name="se">SO</string>
+    <string name="s">S</string>
+    <string name="sw">SW</string>
+    <string name="w">W</string>
+    <string name="nw">NW</string>
+    <string name="n">N</string>
 </resources>

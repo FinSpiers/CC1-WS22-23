@@ -1,30 +1,35 @@
 package com.example.myweather.feature_weather.domain.util
 
+import android.content.Context
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import com.example.myweather.R
+
 object WindDegreeConverter {
-    fun convertToDirection(degree: Int): String {
+    fun convertToDirection(degree: Int, context: Context): String {
         return when (degree) {
             in 26..64 -> {
-                "NE"
+                context.applicationContext.resources.getString(R.string.ne)
             }
             in 65..115 -> {
-                "E"
+                context.applicationContext.resources.getString(R.string.e)
             }
             in 116..154 -> {
-                "SE"
+                context.applicationContext.resources.getString(R.string.se)
             }
             in 155..205 -> {
-                "S"
+                context.applicationContext.resources.getString(R.string.s)
             }
             in 206..244 -> {
-                "SW"
+                context.applicationContext.resources.getString(R.string.sw)
             }
             in 245..295 -> {
-                "W"
+                context.applicationContext.resources.getString(R.string.w)
             }
             in 296..334 -> {
-                "NW"
+                context.applicationContext.resources.getString(R.string.nw)
             }
-            else -> "N"
+            else -> context.applicationContext.resources.getString(R.string.n)
         }
     }
 }
