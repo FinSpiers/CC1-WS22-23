@@ -1,8 +1,6 @@
 package com.example.myweather.feature_weather.domain.util
 
 import android.content.Context
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import com.example.myweather.R
 
 object WindDegreeConverter {
