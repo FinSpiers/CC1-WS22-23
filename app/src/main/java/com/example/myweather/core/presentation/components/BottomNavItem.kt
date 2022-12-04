@@ -1,17 +1,21 @@
 package com.example.myweather.core.presentation.components
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
-import androidx.compose.ui.graphics.vector.ImageVector
-import com.example.myweather.core.presentation.util.Screen
+import androidx.compose.ui.graphics.painter.Painter
 
 sealed class BottomNavItem(
-    val index : Int,
-    val route : String,
-    val title : String,
-    val icon : ImageVector
+    val index: Int,
+    val route: String,
+    val title: String,
+    val icon: Painter
 ) {
-    object Weather : BottomNavItem(0, Screen.WeatherScreen.route, "Weather", Icons.Default.Cloud)
-    object EnvironmentData : BottomNavItem(1, Screen.EnvironmentDataScreen.route, "Environment data", Icons.Default.Details)
-    object Settings : BottomNavItem(2, Screen.SettingsScreen.route, "Settings", Icons.Default.Settings)
+    companion object {
+        class Weather(index: Int, route: String, title: String, icon: Painter) :
+            BottomNavItem(index, route, title, icon)
+
+        class EnvironmentData(index: Int, route: String, title: String, icon: Painter) :
+            BottomNavItem(index, route, title, icon)
+
+        class Settings(index: Int, route: String, title: String, icon: Painter) :
+            BottomNavItem(index, route, title, icon)
+    }
 }
