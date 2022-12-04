@@ -30,7 +30,7 @@ object AppModule {
     @Provides
     @Singleton
     fun provideWeatherRepository(db : WeatherDatabase) : WeatherRepository {
-        return WeatherRepositoryImpl(db.weatherDataDao)
+        return WeatherRepositoryImpl(db.weatherDataDao())
     }
 
     @Provides

@@ -33,6 +33,7 @@ interface OpenWeatherApiService {
 
     companion object {
         operator fun invoke(): OpenWeatherApiService {
+            // build request interceptor to pass API-key in every api call
             val requestInterceptor = Interceptor { chain ->
                 val url = chain.request()
                     .url()
@@ -46,11 +47,13 @@ interface OpenWeatherApiService {
 
                 return@Interceptor chain.proceed(request)
             }
+            // build http-client that uses the request interceptor
             val okHttpClient = OkHttpClient
                 .Builder()
                 .addInterceptor(requestInterceptor)
                 .build()
 
+            // return an implementation of OpenWeatherApiService by using retrofit builder
             return Retrofit.Builder()
                 .client(okHttpClient)
                 .baseUrl("https://api.openweathermap.org/data/2.5/")

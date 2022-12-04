@@ -10,7 +10,7 @@ const val CURRENT_WEATHER_ID = 0
 @Entity
 data class CurrentWeatherData(
     val dateTime : String = "",
-    val location : String = "",
+    var location : String = "",
     val isCelsius : Boolean = true,
     val currentTemperature : Double = 0.0,
     val currentWeatherMain : String = "",

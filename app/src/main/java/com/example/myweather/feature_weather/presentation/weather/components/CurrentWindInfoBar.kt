@@ -10,12 +10,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.myweather.R
 
 @Composable
-fun CurrentWindInfobar(
+fun CurrentWindInfoBar(
     windSpeed: Double,
     windDirection: String
 ) {
@@ -32,7 +33,7 @@ fun CurrentWindInfobar(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "Wind",
+                text = stringResource(id = R.string.wind),
                 style = MaterialTheme.typography.headlineSmall
             )
         }
@@ -80,5 +81,5 @@ fun CurrentWindInfobar(
 @Preview(showBackground = true)
 @Composable
 fun CurrentWindInfoBarPreview() {
-    CurrentWindInfobar(windSpeed = 1.54, windDirection = "SE")
+    CurrentWindInfoBar(windSpeed = 1.54, windDirection = "SE")
 }

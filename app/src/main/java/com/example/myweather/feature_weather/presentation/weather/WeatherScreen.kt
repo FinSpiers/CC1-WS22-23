@@ -1,8 +1,11 @@
 package com.example.myweather.feature_weather.presentation.weather
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.gestures.ScrollableState
+import androidx.compose.foundation.gestures.scrollable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -11,11 +14,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.room.Room
 import com.example.myweather.R
 import com.example.myweather.core.domain.Settings
 import com.example.myweather.feature_weather.data.data_source.database.CurrentWeatherDataDao
+import com.example.myweather.feature_weather.data.data_source.database.WeatherDatabase
 import com.example.myweather.feature_weather.data.data_source.network.OpenWeatherApiService
+import com.example.myweather.feature_weather.data.repository.WeatherRepositoryImpl
 import com.example.myweather.feature_weather.domain.model.CurrentWeatherData
+import com.example.myweather.feature_weather.domain.repository.WeatherRepository
 import com.example.myweather.feature_weather.domain.util.TimestampDatetimeConverter
 import com.example.myweather.feature_weather.domain.util.WindDegreeConverter
 import com.example.myweather.feature_weather.presentation.weather.components.LocationBar
@@ -54,6 +62,7 @@ fun WeatherScreen(
     val lat = 51.517122
     val lon = 9.417862
 
+
     GlobalScope.launch(Dispatchers.Main) {
         val response = apiService.getCurrentWeatherAsync(lat = lat, lon = lon).await()
         locationName.value = response.locationName
@@ -70,6 +79,7 @@ fun WeatherScreen(
     }
     val isCelsius = Settings().isCelsius
     // TODO: build viewModel with states as above
+    val scrollState = rememberScrollState(0)
 
     MyWeatherTheme {
         Surface(
@@ -77,7 +87,9 @@ fun WeatherScreen(
                 .fillMaxSize()
         ) {
             Column(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .verticalScroll(scrollState),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 LocationBar(locationName = locationName.value, dateTime = dateTime.value)
@@ -98,6 +110,7 @@ fun WeatherScreen(
                     windSpeed = windSpeed.value,
                     windDirection = windDirection.value
                 )
+                Spacer(modifier = Modifier.height(100.dp))
             }
         }
     }

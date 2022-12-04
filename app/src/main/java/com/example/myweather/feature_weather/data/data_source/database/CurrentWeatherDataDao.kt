@@ -12,5 +12,5 @@ interface CurrentWeatherDataDao {
     suspend fun getCurrentWeatherData() : CurrentWeatherData?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun setCurrentWeatherData(weatherData: CurrentWeatherData)
+    suspend fun setCurrentWeatherData(currentWeatherData: CurrentWeatherData)
 }

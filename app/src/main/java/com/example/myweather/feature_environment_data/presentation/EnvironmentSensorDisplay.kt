@@ -26,7 +26,7 @@ fun EnvironmentSensorDisplay(sensor: String, sensorData: Double, unit: String, p
             .padding(10.dp)
             .border(
                 width = 2.dp,
-                color = MaterialTheme.colorScheme.secondary,
+                color = MaterialTheme.colorScheme.primaryContainer,
                 shape = RoundedCornerShape(2.dp)
             ),
         verticalAlignment = Alignment.CenterVertically,

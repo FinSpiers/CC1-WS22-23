@@ -11,8 +11,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.myweather.R
 import com.example.myweather.core.domain.Settings
 import com.example.myweather.ui.theme.MyWeatherTheme
 
@@ -43,7 +45,7 @@ fun SettingsScreen() {
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = "Unit",
+                        text = stringResource(id = R.string.unit),
                         style = MaterialTheme.typography.headlineSmall
                     )
                 }
@@ -54,7 +56,7 @@ fun SettingsScreen() {
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = "Celsius",
+                        text = stringResource(id = R.string.celsius),
                         style = MaterialTheme.typography.titleMedium
                     )
                     RadioButton(
@@ -68,7 +70,7 @@ fun SettingsScreen() {
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = "Fahrenheit",
+                        text = stringResource(id = R.string.fahrenheit),
                         style = MaterialTheme.typography.titleMedium
                     )
                     RadioButton(

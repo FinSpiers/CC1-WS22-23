@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
@@ -43,7 +44,7 @@ fun CurrentWeatherBox(
                 .background(MaterialTheme.colorScheme.primaryContainer, RectangleShape)
         ) {
             Text(
-                text = "Current weather",
+                text = stringResource(id = R.string.current_weather),
                 color = MaterialTheme.colorScheme.primary,
                 style = MaterialTheme.typography.titleLarge,
                 fontFamily = FontFamily.Serif,
@@ -63,7 +64,7 @@ fun CurrentWeatherBox(
 
         Image(
             painter = painter,
-            contentDescription = "Default weather description",
+            contentDescription = null,
             modifier = Modifier.size(150.dp)
         )
 
@@ -75,7 +76,7 @@ fun CurrentWeatherBox(
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
-            text = "Feels like " + feelsLike.toString() + if(isCelsius) "°C" else "°F",
+            text = "${stringResource(id = R.string.feels_like)} " + feelsLike.toString() + if(isCelsius) "°C" else "°F",
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.titleMedium,
             fontStyle = FontStyle.Italic,

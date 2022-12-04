@@ -1,7 +1,10 @@
 package com.example.myweather.feature_weather.data.data_source.database
 
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.room.Database
+import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.example.myweather.core.presentation.MainActivity
 import com.example.myweather.feature_weather.domain.model.CurrentWeatherData
 
 @Database(
@@ -10,9 +13,10 @@ import com.example.myweather.feature_weather.domain.model.CurrentWeatherData
 )
 abstract class WeatherDatabase : RoomDatabase() {
 
-    abstract val weatherDataDao: CurrentWeatherDataDao
+    abstract fun weatherDataDao(): CurrentWeatherDataDao
 
     companion object {
         const val DATABASE_NAME = "weather_db"
+
     }
 }

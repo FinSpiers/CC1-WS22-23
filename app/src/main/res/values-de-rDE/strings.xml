@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MyWeather</string>
+    <string name="navigation_title_weather">Wetter</string>
+    <string name="navigation_title_environment_data">Umgebungsdaten</string>
+    <string name="navigation_title_settings">Einstellungen</string>
+
+    <string name="ambient_air_temperature">Umgebungslufttemperatur</string>
+    <string name="illuminance">Helligkeit</string>
+    <string name="ambient_air_pressure">Umgebungsluftdruck</string>
+    <string name="ambient_relative_humidity">Umgebungsluftfeuchtigkeit</string>
+
+
+    <string name="current_weather">Wetter aktuell</string>
+    <string name="feels_like">Gefühlt wie</string>
+    <string name="current_information">Aktuelle informationen</string>
+    <string name="wind">Wind</string>
+
+    <string name="unit">Einheit</string>
+</resources>
