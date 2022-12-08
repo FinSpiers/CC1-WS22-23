@@ -6,7 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.myweather.core.presentation.SettingsScreen
-import com.example.myweather.feature_environmental_data.presentation.EnvironmentDataScreen
+import com.example.myweather.feature_environment_data.presentation.EnvironmentDataScreen
 import com.example.myweather.feature_weather.presentation.weather.WeatherScreen
 
 @Composable

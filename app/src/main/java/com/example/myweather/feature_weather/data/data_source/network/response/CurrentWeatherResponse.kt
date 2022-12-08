@@ -10,12 +10,13 @@ data class CurrentWeatherResponse(
     @SerializedName("name")
     val locationName: String,
     val weather: List<Weather>,
-    val wind: Wind
+    val wind: Wind,
+    val timezone : Int
 )
 
 fun CurrentWeatherResponse.toCurrentWeatherData() : CurrentWeatherData {
     return CurrentWeatherData(
-        timeStamp = dt.toLong(),
+        timeStamp = (dt + timezone).toLong(),
         location = locationName,
         isCelsius = true,
         currentTemperature = main.temp,

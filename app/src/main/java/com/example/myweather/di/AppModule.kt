@@ -1,15 +1,13 @@
 package com.example.myweather.di
 
 import android.app.Application
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.room.Room
-import com.example.myweather.core.presentation.MainActivity
 import com.example.myweather.feature_weather.data.data_source.database.WeatherDatabase
 import com.example.myweather.feature_weather.data.data_source.network.OpenWeatherApiService
-import com.example.myweather.feature_weather.data.data_source.network.interceptor.ConnectivityInterceptorImpl
 import com.example.myweather.feature_weather.data.repository.WeatherRepositoryImpl
 import com.example.myweather.feature_weather.domain.repository.WeatherRepository
 import com.example.myweather.feature_weather.domain.use_case.GetWeatherFromApiUseCase
+
 import com.example.myweather.feature_weather.domain.use_case.GetWeatherFromDatabaseUseCase
 import com.example.myweather.feature_weather.domain.use_case.SaveWeatherToDatabaseUseCase
 import com.example.myweather.feature_weather.domain.use_case.WeatherUseCases
@@ -17,7 +15,6 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import retrofit2.Retrofit
 import javax.inject.Singleton
 
 @Module

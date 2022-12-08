@@ -1,7 +1,6 @@
 package com.example.myweather.feature_weather.data.data_source.network
 
 import com.example.myweather.core.domain.Settings
-import com.example.myweather.feature_weather.data.data_source.network.interceptor.ConnectivityInterceptor
 import com.example.myweather.feature_weather.data.data_source.network.response.CurrentWeatherResponse
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import kotlinx.coroutines.Deferred
@@ -52,7 +51,6 @@ interface OpenWeatherApiService {
             val okHttpClient = OkHttpClient
                 .Builder()
                 .addInterceptor(requestInterceptor)
-                //.addInterceptor(connectivityInterceptor)
                 .build()
 
             // return an implementation of OpenWeatherApiService by using retrofit builder

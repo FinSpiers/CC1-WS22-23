@@ -1,4 +1,4 @@
-package com.example.myweather.feature_environmental_data.presentation
+package com.example.myweather.feature_environment_data.presentation
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -29,7 +29,7 @@ fun EnvironmentDataScreen() {
             sensorData = 190.0,
             unit = "°C",
             painter = painterResource(
-                id = com.example.myweather.R.drawable.icon_temperature
+                id = R.drawable.icon_temperature
             )
         )
         EnvironmentSensorDisplay(
@@ -37,7 +37,7 @@ fun EnvironmentDataScreen() {
             sensorData = 20000.0,
             unit = "lx",
             painter = painterResource(
-                id = com.example.myweather.R.drawable.icon_illuminance
+                id = R.drawable.icon_illuminance
             )
         )
         EnvironmentSensorDisplay(
@@ -45,7 +45,7 @@ fun EnvironmentDataScreen() {
             sensorData = 1013.0,
             unit = "hpa",
             painter = painterResource(
-                id = com.example.myweather.R.drawable.icon_barometer
+                id = R.drawable.icon_barometer
             )
         )
         EnvironmentSensorDisplay(
