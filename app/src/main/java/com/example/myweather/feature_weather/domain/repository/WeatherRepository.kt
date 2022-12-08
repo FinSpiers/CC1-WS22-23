@@ -14,5 +14,5 @@ interface WeatherRepository {
         lon: Double,
         unit: String,
         language: String
-    ): Deferred<CurrentWeatherResponse>
+    ): CurrentWeatherData?
 }

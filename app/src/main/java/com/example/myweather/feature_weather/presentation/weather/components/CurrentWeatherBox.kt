@@ -23,11 +23,11 @@ import com.example.myweather.ui.theme.MyWeatherTheme
 
 @Composable
 fun CurrentWeatherBox(
-    currentTemperature: Double,
-    feelsLike : Double,
-    isCelsius: Boolean,
-    painter: Painter,
-    weatherDescription: String,
+    currentTemperature: Double?,
+    feelsLike : Double?,
+    isCelsius: Boolean?,
+    painter: Painter?,
+    weatherDescription: String?,
     modifier: Modifier = Modifier
 ) {
 
@@ -54,29 +54,44 @@ fun CurrentWeatherBox(
                     .padding(vertical = 4.dp)
             )
         }
+        val text : String = when(isCelsius){
+            true -> "${currentTemperature}°C"
+            false -> "${currentTemperature}°F"
+            null -> ""
+        }
+
+        val textFeelsLike : String = when(isCelsius){
+            true -> "${feelsLike}°C"
+            false -> "${feelsLike}°F"
+            null -> ""
+        }
 
         Text(
-            text = if (isCelsius) "${currentTemperature}°C" else "${currentTemperature}°F",
+            text = text,
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.displayMedium,
             modifier = Modifier.padding(vertical = 16.dp)
         )
 
-        Image(
-            painter = painter,
-            contentDescription = null,
-            modifier = Modifier.size(150.dp)
-        )
+        painter?.let {
+            Image(
+                painter = it,
+                contentDescription = null,
+                modifier = Modifier.size(150.dp)
+            )
+        }
 
         Text(
-            text = weatherDescription,
+            text = weatherDescription ?: "",
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.titleLarge,
             modifier = Modifier.padding(vertical = 16.dp)
         )
         Spacer(modifier = Modifier.height(8.dp))
+
+
         Text(
-            text = "${stringResource(id = R.string.feels_like)} " + feelsLike.toString() + if(isCelsius) "°C" else "°F",
+            text = textFeelsLike,
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.titleMedium,
             fontStyle = FontStyle.Italic,

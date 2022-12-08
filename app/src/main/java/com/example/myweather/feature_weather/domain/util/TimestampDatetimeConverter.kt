@@ -3,7 +3,7 @@ package com.example.myweather.feature_weather.domain.util
 import java.time.*
 
 object TimestampDatetimeConverter {
-    fun convertToDatetime(timestamp: Int) : String {
+    fun convertToDatetime(timestamp: Long) : String {
         var dateTime = ""
 
         val dt = Instant.ofEpochSecond(timestamp.toLong())

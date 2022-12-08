@@ -24,8 +24,8 @@ const val UNITS_FAHRENHEIT = "imperial"
 // https://api.openweathermap.org/data/2.5/weather?lat=44.34&lon=10.99&appid=b098130e166bdf3ac1341c71af539675&units=metric&lang=de
 
 interface OpenWeatherApiService {
-    @GET("weather")
-    fun getCurrentWeatherAsync(
+    @GET("/data/2.5/weather")
+    fun getCurrentWeatherAsync (
         @Query("lat") lat: Double,
         @Query("lon") lon: Double,
         @Query("units") unit: String = if(Settings().isCelsius) UNITS_CELSIUS else UNITS_FAHRENHEIT,
@@ -33,7 +33,7 @@ interface OpenWeatherApiService {
     ): Deferred<CurrentWeatherResponse>
 
     companion object {
-        operator fun invoke(connectivityInterceptor: ConnectivityInterceptor): OpenWeatherApiService {
+        operator fun invoke(): OpenWeatherApiService {
             // build request interceptor to pass API-key in every api call
             val requestInterceptor = Interceptor { chain ->
                 val url = chain.request()
@@ -52,13 +52,13 @@ interface OpenWeatherApiService {
             val okHttpClient = OkHttpClient
                 .Builder()
                 .addInterceptor(requestInterceptor)
-                .addInterceptor(connectivityInterceptor)
+                //.addInterceptor(connectivityInterceptor)
                 .build()
 
             // return an implementation of OpenWeatherApiService by using retrofit builder
             return Retrofit.Builder()
                 .client(okHttpClient)
-                .baseUrl("https://api.openweathermap.org/data/2.5/")
+                .baseUrl("https://api.openweathermap.org")
                 .addCallAdapterFactory(CoroutineCallAdapterFactory())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
