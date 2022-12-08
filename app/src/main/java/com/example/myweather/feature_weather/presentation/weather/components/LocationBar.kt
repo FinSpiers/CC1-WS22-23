@@ -21,8 +21,8 @@ import com.example.myweather.ui.theme.MyWeatherTheme
 
 @Composable
 fun LocationBar(
-    locationName: String,
-    dateTime: String,
+    locationName: String?,
+    dateTime: String?,
     modifier: Modifier = Modifier,
 
     ) {
@@ -42,14 +42,14 @@ fun LocationBar(
             ) {
                 Icon(
                     imageVector = Icons.Default.LocationOn,
-                    contentDescription = "Location",
+                    contentDescription = locationName ?: "",
                     modifier = Modifier
                         .padding(horizontal = 8.dp)
 
 
                 )
                 Text(
-                    text = locationName,
+                    text = locationName ?: "",
                     style = MaterialTheme.typography.headlineSmall,
                     modifier = modifier
                         .padding(horizontal = 4.dp, vertical = 4.dp)
@@ -68,7 +68,7 @@ fun LocationBar(
             horizontalArrangement = Arrangement.Start
         ) {
             Text(
-                text = dateTime,
+                text = dateTime ?: "",
                 style = MaterialTheme.typography.titleMedium
             )
         }

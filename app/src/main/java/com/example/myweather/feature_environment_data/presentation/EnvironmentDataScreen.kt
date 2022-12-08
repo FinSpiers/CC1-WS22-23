@@ -1,6 +1,8 @@
-package com.example.myweather.feature_environmental_data.presentation
+package com.example.myweather.feature_environment_data.presentation
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -14,10 +16,11 @@ import com.example.myweather.ui.theme.MyWeatherTheme
 
 @Composable
 fun EnvironmentDataScreen() {
+    val scrollState = rememberScrollState(0)
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(5.dp),
+            .padding(5.dp).verticalScroll(scrollState),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceEvenly
     ) {
@@ -26,7 +29,7 @@ fun EnvironmentDataScreen() {
             sensorData = 190.0,
             unit = "°C",
             painter = painterResource(
-                id = com.example.myweather.R.drawable.icon_temperature
+                id = R.drawable.icon_temperature
             )
         )
         EnvironmentSensorDisplay(
@@ -34,7 +37,7 @@ fun EnvironmentDataScreen() {
             sensorData = 20000.0,
             unit = "lx",
             painter = painterResource(
-                id = com.example.myweather.R.drawable.icon_illuminance
+                id = R.drawable.icon_illuminance
             )
         )
         EnvironmentSensorDisplay(
@@ -42,7 +45,7 @@ fun EnvironmentDataScreen() {
             sensorData = 1013.0,
             unit = "hpa",
             painter = painterResource(
-                id = com.example.myweather.R.drawable.icon_barometer
+                id = R.drawable.icon_barometer
             )
         )
         EnvironmentSensorDisplay(
@@ -50,11 +53,11 @@ fun EnvironmentDataScreen() {
             sensorData = 35.0,
             unit = "%",
             painter = painterResource(
-                id = com.example.myweather.R.drawable.icon_humidity
+                id = R.drawable.icon_humidity
             )
         )
-        Spacer(modifier = Modifier.height(16.dp))
-    //EnvironmentSensorDisplay(sensor = "Device temperature", sensorData = 35.0, unit = "°C")
+        Spacer(modifier = Modifier.height(100.dp))
+
     }
 }
 
