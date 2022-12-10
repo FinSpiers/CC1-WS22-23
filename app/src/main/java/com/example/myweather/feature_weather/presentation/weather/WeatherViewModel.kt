@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.myweather.feature_weather.data.data_source.network.NoConnectivityException
 import com.example.myweather.feature_weather.domain.model.CurrentWeatherData
 import com.example.myweather.feature_weather.domain.use_case.WeatherUseCases
+import com.example.myweather.feature_weather.presentation.WeatherEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
