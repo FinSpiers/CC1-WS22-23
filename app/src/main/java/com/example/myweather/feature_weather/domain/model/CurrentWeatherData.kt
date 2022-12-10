@@ -2,10 +2,11 @@ package com.example.myweather.feature_weather.domain.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.example.myweather.feature_weather.data.data_source.database.WeatherDatabase
 
 const val CURRENT_WEATHER_ID = 0
 
-@Entity
+@Entity(tableName = WeatherDatabase.DATABASE_NAME)
 data class CurrentWeatherData(
     val timeStamp: Long = 0,
     var location: String = "Test",
