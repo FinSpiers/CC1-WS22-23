@@ -7,14 +7,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
-import androidx.navigation.NavController
-import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.myweather.R
+import com.example.myweather.core.domain.model.BottomNavItem
 import com.example.myweather.core.presentation.MainViewModel
 import com.example.myweather.core.presentation.navigationbar.NavigationBarEvent
-import com.example.myweather.core.presentation.navigationbar.NavigationBarState
 import com.example.myweather.core.presentation.util.Screen
 
 @Composable
@@ -54,26 +50,10 @@ fun BottomNavigationBar(viewModel: MainViewModel) {
                 selected = item.route == navBarState.currentRoute,
                 onClick = {
                     when (item.index) {
-                        0 -> {
-                            viewModel.onEvent(NavigationBarEvent.WeatherTabClick)
-                        }
-                        1 -> {
-                            viewModel.onEvent(NavigationBarEvent.EnvironmentDataTabClick)
-                        }
-                        2 -> {
-                            viewModel.onEvent(NavigationBarEvent.SettingsTabClick)
-                        }
+                        0 -> viewModel.onEvent(NavigationBarEvent.WeatherTabClick)
+                        1 -> viewModel.onEvent(NavigationBarEvent.EnvironmentDataTabClick)
+                        2 -> viewModel.onEvent(NavigationBarEvent.SettingsTabClick)
                     }
-                    /*navController.navigate(item.route) {
-                        navController.graph.startDestinationRoute?.let { route ->
-                            popUpTo(route) {
-                                saveState = true
-                            }
-                        }
-                        launchSingleTop = true
-                        restoreState = true
-                    }
-                     */
                 },
                 colors = NavigationBarItemDefaults.colors(
                     selectedIconColor = MaterialTheme.colorScheme.primary,

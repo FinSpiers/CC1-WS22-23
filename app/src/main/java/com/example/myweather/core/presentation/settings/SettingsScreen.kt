@@ -1,4 +1,4 @@
-package com.example.myweather.core.presentation
+package com.example.myweather.core.presentation.settings
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -7,23 +7,19 @@ import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.myweather.R
-import com.example.myweather.core.domain.Settings
-import com.example.myweather.ui.theme.MyWeatherTheme
+import com.example.myweather.core.domain.model.Settings
 
 @Composable
-fun SettingsScreen() {
-    val isCelsius = remember {
-        mutableStateOf(Settings().isCelsius)
-    }
-
+fun SettingsScreen(
+    viewModel : SettingsViewModel = hiltViewModel()
+) {
+    val state = viewModel.state.value
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
@@ -60,8 +56,8 @@ fun SettingsScreen() {
                         style = MaterialTheme.typography.titleMedium
                     )
                     RadioButton(
-                        selected = isCelsius.value,
-                        onClick = { isCelsius.value = !isCelsius.value })
+                        selected = state.isCelsius,
+                        onClick = { viewModel.setIsCelsius(true) })
                 }
 
                 Row(
@@ -74,21 +70,11 @@ fun SettingsScreen() {
                         style = MaterialTheme.typography.titleMedium
                     )
                     RadioButton(
-                        selected = !isCelsius.value,
-                        onClick = { isCelsius.value = !isCelsius.value })
+                        selected = !state.isCelsius,
+                        onClick = { viewModel.setIsCelsius(false) })
                 }
-                Settings().isCelsius = isCelsius.value
             }
         }
     }
 }
 
-
-@Preview(showBackground = true)
-@Composable
-fun SettingsScreenPreview() {
-    MyWeatherTheme {
-        SettingsScreen()
-    }
-
-}

@@ -1,6 +1,5 @@
 package com.example.myweather.core.presentation
 
-import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -16,10 +15,6 @@ class MainViewModel @Inject constructor() : ViewModel() {
     private val _navState = mutableStateOf(NavigationBarState())
     val navState: State<NavigationBarState> = _navState
     private var navController: NavHostController? = null
-
-    init {
-        Log.e("MainViewModel", "created")
-    }
 
     fun onEvent(event: NavigationBarEvent) {
         var destination: String? = null
