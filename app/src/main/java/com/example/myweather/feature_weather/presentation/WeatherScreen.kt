@@ -1,40 +1,34 @@
-package com.example.myweather.feature_weather.presentation.weather
+package com.example.myweather.feature_weather.presentation
 
-import android.annotation.SuppressLint
 import android.content.Context
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveableStateHolder
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.myweather.R
-import com.example.myweather.core.presentation.MainActivity
 import com.example.myweather.feature_weather.domain.util.TimestampDatetimeConverter
 import com.example.myweather.feature_weather.domain.util.WindDegreeConverter
+import com.example.myweather.feature_weather.presentation.weather.WeatherViewModel
 import com.example.myweather.feature_weather.presentation.weather.components.LocationBar
 import com.example.myweather.feature_weather.presentation.weather.components.CurrentWeatherBox
 import com.example.myweather.feature_weather.presentation.weather.components.CurrentInformationBox
 import com.example.myweather.ui.theme.MyWeatherTheme
 
 
-@SuppressLint("CoroutineCreationDuringComposition")
 @Composable
 fun WeatherScreen(
     context: Context,
     viewModel: WeatherViewModel = hiltViewModel()
 ) {
-    val state = viewModel.state.value
     val scrollState = rememberScrollState(0)
+    val state = viewModel.state.value
     MyWeatherTheme {
         Surface(
             modifier = Modifier

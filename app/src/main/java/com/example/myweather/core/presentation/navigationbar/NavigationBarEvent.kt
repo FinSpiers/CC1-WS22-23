@@ -1,4 +1,4 @@
-package com.example.myweather.core.presentation
+package com.example.myweather.core.presentation.navigationbar
 
 open class NavigationBarEvent {
     object WeatherTabClick : NavigationBarEvent()

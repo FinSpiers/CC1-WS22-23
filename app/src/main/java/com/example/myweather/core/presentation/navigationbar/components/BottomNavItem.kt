@@ -1,4 +1,4 @@
-package com.example.myweather.core.presentation.components
+package com.example.myweather.core.presentation.navigationbar.components
 
 import androidx.compose.ui.graphics.painter.Painter
 
