@@ -7,8 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.myweather.core.presentation.SettingsScreen
 import com.example.myweather.feature_environment_data.presentation.EnvironmentDataScreen
-import com.example.myweather.feature_weather.presentation.weather.WeatherScreen
-
+import com.example.myweather.feature_weather.presentation.WeatherScreen
 @Composable
 fun NavigationSetup(navController : NavHostController, startDestination : String, context: Context) {
     NavHost(navController = navController, startDestination = startDestination) {

@@ -2,27 +2,18 @@ package com.example.myweather.core.presentation.components
 
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.myweather.R
 import com.example.myweather.core.presentation.util.Screen
 
 @Composable
-fun BottomNavigationBar(navController: NavController, route: String) {
-    val currentRoute = remember {
-        mutableStateOf(route)
-    }
-    val currentNavItemSelection = remember {
-        mutableStateListOf(true, false, false)
-    }
-
+fun BottomNavigationBar(navController: NavController, route : String) {
     val items = listOf<BottomNavItem>(
         BottomNavItem.Companion.Weather(
             index = 0,
@@ -43,20 +34,22 @@ fun BottomNavigationBar(navController: NavController, route: String) {
             painterResource(id = R.drawable.ic_baseline_settings_24)
         ),
     )
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    var currentRoute : String? = null
+    currentRoute = if (navBackStackEntry != null && navBackStackEntry!!.destination.route != null) {
+        navBackStackEntry?.destination?.route
+    }
+    else {
+        route
+    }
     NavigationBar {
         items.forEach { item ->
-            val isSelected = currentNavItemSelection[item.index]
+            val isSelected = remember { mutableStateOf(currentRoute == item.route) }
             NavigationBarItem(
                 icon = { Icon(painter = item.icon, contentDescription = item.title, modifier = Modifier.size(32.dp)) },
                 label = { Text(text = item.title, style = MaterialTheme.typography.bodyMedium) },
-                selected = isSelected,
+                selected = isSelected.value,
                 onClick = {
-                    //if (item.route != currentRoute.value) {
-                        // Update selection state list
-                        for (i in 0..2) {
-                            currentNavItemSelection[i] = (item.index == i)
-                        }
-
                         navController.navigate(item.route) {
                             navController.graph.startDestinationRoute?.let { route ->
                                 popUpTo(route) {
@@ -64,11 +57,8 @@ fun BottomNavigationBar(navController: NavController, route: String) {
                                 }
                             }
                             launchSingleTop = true
-
                             restoreState = true
                         }
-                        currentRoute.value = item.route
-                    //}
                 },
                 colors = NavigationBarItemDefaults.colors(
                     selectedIconColor = MaterialTheme.colorScheme.primary,
