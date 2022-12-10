@@ -1,6 +1,6 @@
 package com.example.myweather.feature_weather.data.data_source.network
 
-import com.example.myweather.core.domain.Settings
+import com.example.myweather.core.domain.model.Settings
 import com.example.myweather.feature_weather.data.data_source.network.response.CurrentWeatherResponse
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import kotlinx.coroutines.Deferred
@@ -11,6 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
 import java.util.Locale
+import javax.inject.Inject
 
 const val API_KEY = "b098130e166bdf3ac1341c71af539675"
 

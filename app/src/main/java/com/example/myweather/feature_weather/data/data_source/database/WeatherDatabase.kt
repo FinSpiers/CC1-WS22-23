@@ -1,10 +1,7 @@
 package com.example.myweather.feature_weather.data.data_source.database
 
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.room.Database
-import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.myweather.core.presentation.MainActivity
 import com.example.myweather.feature_weather.domain.model.CurrentWeatherData
 
 @Database(

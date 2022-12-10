@@ -26,7 +26,7 @@ class GetWeatherFromApiUseCase @Inject constructor(
             }
         }
         catch (e : IOException) {
-            Log.e("connectivity", "no connection to server")
+            Log.e("connectivity", "Error, couldn't connect to server")
             throw NoConnectivityException()
         }
     }

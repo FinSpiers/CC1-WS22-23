@@ -5,6 +5,9 @@ import androidx.room.Room
 import com.example.myweather.feature_environment_data.data.repository.EnvironmentDataRepositoryImpl
 import com.example.myweather.feature_environment_data.domain.model.*
 import com.example.myweather.feature_environment_data.domain.repository.EnvironmentDataRepository
+import com.example.myweather.core.data.data_source.SettingsDatabase
+import com.example.myweather.core.data.repository.SettingsRepositoryImpl
+import com.example.myweather.core.domain.repository.SettingsRepository
 import com.example.myweather.feature_weather.data.data_source.database.WeatherDatabase
 import com.example.myweather.feature_weather.data.data_source.network.OpenWeatherApiService
 import com.example.myweather.feature_weather.data.repository.WeatherRepositoryImpl
@@ -23,6 +26,22 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
+    @Provides
+    @Singleton
+    fun provideSettingsDatabase(app: Application): SettingsDatabase {
+        return Room.databaseBuilder(
+            app,
+            SettingsDatabase::class.java,
+            SettingsDatabase.DATABASE_NAME
+        ).build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideSettingsRepository(db : SettingsDatabase) : SettingsRepository {
+        return SettingsRepositoryImpl(db.settingsDao())
+    }
+
     @Provides
     @Singleton
     fun provideApiService(): OpenWeatherApiService {

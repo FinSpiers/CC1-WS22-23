@@ -1,14 +1,14 @@
-package com.example.myweather.core.presentation.util
+package com.example.myweather.core.presentation.navigationbar.components
 
 import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.myweather.core.presentation.SettingsScreen
+import com.example.myweather.core.presentation.settings.SettingsScreen
+import com.example.myweather.core.presentation.util.Screen
 import com.example.myweather.feature_environment_data.presentation.EnvironmentDataScreen
-import com.example.myweather.feature_weather.presentation.weather.WeatherScreen
-
+import com.example.myweather.feature_weather.presentation.WeatherScreen
 @Composable
 fun NavigationSetup(navController : NavHostController, startDestination : String, context: Context) {
     NavHost(navController = navController, startDestination = startDestination) {

@@ -1,29 +1,22 @@
-package com.example.myweather.core.presentation.components
+package com.example.myweather.core.presentation.navigationbar.components
 
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import com.example.myweather.R
+import com.example.myweather.core.domain.model.BottomNavItem
+import com.example.myweather.core.presentation.MainViewModel
+import com.example.myweather.core.presentation.navigationbar.NavigationBarEvent
 import com.example.myweather.core.presentation.util.Screen
 
 @Composable
-fun BottomNavigationBar(navController: NavController, route: String) {
-    val currentRoute = remember {
-        mutableStateOf(route)
-    }
-    val currentNavItemSelection = remember {
-        mutableStateListOf(true, false, false)
-    }
-
-    val items = listOf<BottomNavItem>(
+fun BottomNavigationBar(viewModel: MainViewModel) {
+    val navBarState = viewModel.navState.value
+    val items = listOf(
         BottomNavItem.Companion.Weather(
             index = 0,
             route = Screen.WeatherScreen.route,
@@ -45,30 +38,22 @@ fun BottomNavigationBar(navController: NavController, route: String) {
     )
     NavigationBar {
         items.forEach { item ->
-            val isSelected = currentNavItemSelection[item.index]
             NavigationBarItem(
-                icon = { Icon(painter = item.icon, contentDescription = item.title, modifier = Modifier.size(32.dp)) },
+                icon = {
+                    Icon(
+                        painter = item.icon,
+                        contentDescription = item.title,
+                        modifier = Modifier.size(32.dp)
+                    )
+                },
                 label = { Text(text = item.title, style = MaterialTheme.typography.bodyMedium) },
-                selected = isSelected,
+                selected = item.route == navBarState.currentRoute,
                 onClick = {
-                    //if (item.route != currentRoute.value) {
-                        // Update selection state list
-                        for (i in 0..2) {
-                            currentNavItemSelection[i] = (item.index == i)
-                        }
-
-                        navController.navigate(item.route) {
-                            navController.graph.startDestinationRoute?.let { route ->
-                                popUpTo(route) {
-                                    saveState = true
-                                }
-                            }
-                            launchSingleTop = true
-
-                            restoreState = true
-                        }
-                        currentRoute.value = item.route
-                    //}
+                    when (item.index) {
+                        0 -> viewModel.onEvent(NavigationBarEvent.WeatherTabClick)
+                        1 -> viewModel.onEvent(NavigationBarEvent.EnvironmentDataTabClick)
+                        2 -> viewModel.onEvent(NavigationBarEvent.SettingsTabClick)
+                    }
                 },
                 colors = NavigationBarItemDefaults.colors(
                     selectedIconColor = MaterialTheme.colorScheme.primary,
