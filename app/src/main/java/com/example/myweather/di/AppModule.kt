@@ -2,6 +2,9 @@ package com.example.myweather.di
 
 import android.app.Application
 import androidx.room.Room
+import com.example.myweather.feature_environment_data.data.repository.EnvironmentDataRepositoryImpl
+import com.example.myweather.feature_environment_data.domain.model.*
+import com.example.myweather.feature_environment_data.domain.repository.EnvironmentDataRepository
 import com.example.myweather.core.data.data_source.SettingsDatabase
 import com.example.myweather.core.data.repository.SettingsRepositoryImpl
 import com.example.myweather.core.domain.repository.SettingsRepository
@@ -41,7 +44,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideApiService() : OpenWeatherApiService {
+    fun provideApiService(): OpenWeatherApiService {
         return OpenWeatherApiService()
     }
 
@@ -57,17 +60,52 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideWeatherRepository(db : WeatherDatabase, apiService: OpenWeatherApiService) : WeatherRepository {
+    fun provideWeatherRepository(
+        db: WeatherDatabase,
+        apiService: OpenWeatherApiService
+    ): WeatherRepository {
         return WeatherRepositoryImpl(db.weatherDataDao(), apiService)
     }
 
     @Provides
     @Singleton
-    fun provideWeatherUseCases(repository : WeatherRepository) : WeatherUseCases {
+    fun provideWeatherUseCases(repository: WeatherRepository): WeatherUseCases {
         return WeatherUseCases(
             getWeatherFromApiUseCase = GetWeatherFromApiUseCase(repository),
             getWeatherFromDatabaseUseCase = GetWeatherFromDatabaseUseCase(repository),
             saveWeatherToDatabaseUseCase = SaveWeatherToDatabaseUseCase(repository)
         )
+    }
+
+    @Provides
+    @Singleton
+    fun provideEnvironmentDataRepository(app: Application): EnvironmentDataRepository {
+        return EnvironmentDataRepositoryImpl(app)
+    }
+
+    @Provides
+    @Singleton
+    fun provideTemperatureSensor(app: Application): EnvironmentSensor {
+        return TemperatureSensor(app)
+    }
+
+    @Provides
+    @Singleton
+    fun provideLightSensor(app: Application): EnvironmentSensor {
+        return LightSensor(app)
+    }
+
+
+    @Provides
+    @Singleton
+    fun provideAirPressureSensor(app: Application): EnvironmentSensor {
+        return AirPressureSensor(app)
+    }
+
+
+    @Provides
+    @Singleton
+    fun provideRelativeHumiditySensor(app: Application): EnvironmentSensor {
+        return RelativeHumiditySensor(app)
     }
 }

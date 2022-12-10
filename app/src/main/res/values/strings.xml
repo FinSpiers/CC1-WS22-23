@@ -26,4 +26,9 @@
     <string name="w">W</string>
     <string name="nw">NW</string>
     <string name="n">N</string>
+    <string name="celsius_unit" translatable="false">°C</string>
+    <string name="illuminance_unit" translatable="false">lx</string>
+    <string name="air_pressure_unit" translatable="false">hPa</string>
+    <string name="relative_humidity_unit" translatable="false">%</string>
+    <string name="fahrenheit_unit" translatable="false">°F</string>
 </resources>

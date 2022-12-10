@@ -19,7 +19,7 @@ import com.example.myweather.R
 import com.example.myweather.ui.theme.MyWeatherTheme
 
 @Composable
-fun EnvironmentSensorDisplay(sensor: String, sensorData: Double, unit: String, painter: Painter) {
+fun EnvironmentSensorDisplay(sensor: String, sensorData: String, unit: String, painter: Painter) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -73,21 +73,4 @@ fun EnvironmentSensorDisplay(sensor: String, sensorData: Double, unit: String, p
         }
     }
 
-}
-
-
-@Preview(showBackground = true)
-@Composable
-fun EnvironmentSensorDisplayPreview() {
-    MyWeatherTheme {
-        EnvironmentSensorDisplay(
-            sensor = "Ambient air pressure",
-            sensorData = 1013.0,
-            unit = "hpa",
-            painter = painterResource(
-                id = R.drawable.icon_barometer
-            )
-        )
-
-    }
 }
