@@ -8,50 +8,58 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.myweather.R
 import com.example.myweather.feature_environment_data.presentation.components.EnvironmentSensorDisplay
-import com.example.myweather.ui.theme.MyWeatherTheme
+import kotlin.math.roundToInt
 
 @Composable
-fun EnvironmentDataScreen() {
+fun EnvironmentDataScreen(
+    viewModel: EnvironmentDataViewModel = hiltViewModel()
+) {
+
+    val temperatureSensorState = viewModel.temperatureSensorState.value.roundToInt()
+    val lightSensorState = viewModel.lightSensorState.value.roundToInt()
+    val airPressureSensorState = viewModel.airPressureSensorState.value.roundToInt()
+    val relativeHumiditySensorState = viewModel.relativeHumiditySensorState.value.roundToInt()
     val scrollState = rememberScrollState(0)
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(5.dp).verticalScroll(scrollState),
+            .padding(5.dp)
+            .verticalScroll(scrollState),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceEvenly
     ) {
         EnvironmentSensorDisplay(
             sensor = stringResource(id = R.string.ambient_air_temperature),
-            sensorData = 190.0,
-            unit = "°C",
+            sensorData = temperatureSensorState.toString(),
+            unit = stringResource(id = R.string.celsius_unit),
             painter = painterResource(
                 id = R.drawable.icon_temperature
             )
         )
         EnvironmentSensorDisplay(
             sensor = stringResource(id = R.string.illuminance),
-            sensorData = 20000.0,
-            unit = "lx",
+            sensorData = lightSensorState.toString(),
+            unit = stringResource(id = R.string.illuminance_unit),
             painter = painterResource(
                 id = R.drawable.icon_illuminance
             )
         )
         EnvironmentSensorDisplay(
             sensor = stringResource(id = R.string.ambient_air_pressure),
-            sensorData = 1013.0,
-            unit = "hpa",
+            sensorData = airPressureSensorState.toString(),
+            unit = stringResource(id = R.string.air_pressure_unit),
             painter = painterResource(
                 id = R.drawable.icon_barometer
             )
         )
         EnvironmentSensorDisplay(
             sensor = stringResource(id = R.string.ambient_relative_humidity),
-            sensorData = 35.0,
-            unit = "%",
+            sensorData = relativeHumiditySensorState.toString(),
+            unit = stringResource(id = R.string.relative_humidity_unit),
             painter = painterResource(
                 id = R.drawable.icon_humidity
             )
@@ -60,13 +68,3 @@ fun EnvironmentDataScreen() {
 
     }
 }
-
-
-@Preview(showBackground = true)
-@Composable
-fun EnvironmentDataScreenPreview() {
-    MyWeatherTheme {
-        EnvironmentDataScreen()
-    }
-}
-

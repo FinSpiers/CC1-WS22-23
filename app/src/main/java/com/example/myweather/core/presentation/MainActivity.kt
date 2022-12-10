@@ -4,6 +4,7 @@ package com.example.myweather.core.presentation
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.os.PersistableBundle
 import androidx.activity.ComponentActivity
