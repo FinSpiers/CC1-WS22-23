@@ -6,13 +6,13 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.saveable.rememberSaveableStateHolder
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.myweather.R
+import com.example.myweather.core.presentation.settings.SettingsViewModel
 import com.example.myweather.feature_weather.domain.util.TimestampDatetimeConverter
 import com.example.myweather.feature_weather.domain.util.WindDegreeConverter
 import com.example.myweather.feature_weather.presentation.weather.WeatherViewModel
@@ -25,7 +25,8 @@ import com.example.myweather.ui.theme.MyWeatherTheme
 @Composable
 fun WeatherScreen(
     context: Context,
-    viewModel: WeatherViewModel = hiltViewModel()
+    viewModel: WeatherViewModel = hiltViewModel(),
+    viewModelSet : SettingsViewModel = hiltViewModel()
 ) {
     val scrollState = rememberScrollState(0)
     val state = viewModel.state.value
@@ -51,7 +52,7 @@ fun WeatherScreen(
                     CurrentWeatherBox(
                         currentTemperature = it.currentTemperature,
                         feelsLike = it.feelsLike,
-                        isCelsius = it.isCelsius,
+                        isCelsius = viewModelSet.state.value.isCelsius,
                         painter = painterResource(id = R.drawable.image_weather_cloudy),
                         weatherDescription = it.currentWeatherDescription
                     )
@@ -60,7 +61,7 @@ fun WeatherScreen(
                 state.weatherData?.let {
                     CurrentInformationBox(
                         // TODO: set dynamic
-                        isCelsius = true,
+                        isCelsius = viewModelSet.state.value.isCelsius,
                         minTemperature = it.minTemp,
                         maxTemperature = it.maxTemp,
                         airPressure = it.airPressure,

@@ -56,13 +56,19 @@ fun CurrentWeatherBox(
         }
         val text : String = when(isCelsius){
             true -> "${currentTemperature}°C"
-            false -> "${currentTemperature}°F"
+            false -> {
+                val tempFahrenheit = (currentTemperature!! * 9/5) + 32
+                "${tempFahrenheit}°F"
+            }
             null -> ""
         }
 
         val textFeelsLike : String = when(isCelsius){
             true -> "${feelsLike}°C"
-            false -> "${feelsLike}°F"
+            false -> {
+                val feelsFahrenheit = (feelsLike!! * 9/5) + 32
+                "${feelsFahrenheit}°F"
+            }
             null -> ""
         }
 
