@@ -75,14 +75,20 @@ fun CurrentInformationBar(
                     painter = painterResource(id = R.drawable.ic_baseline_arrow_upward_24),
                     contentDescription = null
                 )
-                Text(text = if (isCelsius) "${maxTemperature}°C" else "${maxTemperature}°F")
+                Text(text = if (isCelsius) "${maxTemperature}°C" else {
+                    val maxTempFahrenheit = (maxTemperature * 9/5) + 32
+                    "${maxTempFahrenheit}°F"
+                })
             }
             Row(
                 Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(text = if (isCelsius) "${minTemperature}°C" else "${minTemperature}°F")
+                Text(text = if (isCelsius) "${minTemperature}°C" else {
+                    val minTempFahrenheit = (minTemperature * 9/5) +32
+                    "${minTempFahrenheit}°F"
+                })
                 Icon(
                     painter = painterResource(id = R.drawable.ic_baseline_arrow_downward_24),
                     contentDescription = "daily min temperature"
