@@ -1,4 +1,4 @@
-package com.example.myweather.feature_weather.presentation.weather.components
+package com.example.myweather.feature_weather.presentation.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -30,7 +30,6 @@ fun CurrentWeatherBox(
     weatherDescription: String?,
     modifier: Modifier = Modifier
 ) {
-
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -54,23 +53,8 @@ fun CurrentWeatherBox(
                     .padding(vertical = 4.dp)
             )
         }
-        val text : String = when(isCelsius){
-            true -> "${currentTemperature}°C"
-            false -> {
-                val tempFahrenheit = (currentTemperature!! * 9/5) + 32
-                "${tempFahrenheit}°F"
-            }
-            null -> ""
-        }
-
-        val textFeelsLike : String = when(isCelsius){
-            true -> "${feelsLike}°C"
-            false -> {
-                val feelsFahrenheit = (feelsLike!! * 9/5) + 32
-                "${feelsFahrenheit}°F"
-            }
-            null -> ""
-        }
+        val text : String = if(isCelsius == true) "$currentTemperature°C" else "$currentTemperature°F"
+        val textFeelsLike : String = if(isCelsius == true) "$feelsLike°C" else "$feelsLike°F"
 
         Text(
             text = text,
@@ -115,7 +99,7 @@ fun WeatherInfoBoxPreview() {
             currentTemperature = -1.5,
             feelsLike = -2.5,
             isCelsius = true,
-            painter = painterResource(id = R.drawable.image_weather_cloudy),
+            painter = painterResource(id = R.drawable.image_weather_sunny_with_clouds),
             weatherDescription = "No discription available"
         )
     }

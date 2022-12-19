@@ -8,28 +8,33 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.myweather.R
-import com.example.myweather.core.presentation.settings.SettingsViewModel
 import com.example.myweather.feature_weather.domain.util.TimestampDatetimeConverter
+import com.example.myweather.feature_weather.domain.util.WeatherMainMap
 import com.example.myweather.feature_weather.domain.util.WindDegreeConverter
-import com.example.myweather.feature_weather.presentation.weather.WeatherViewModel
-import com.example.myweather.feature_weather.presentation.weather.components.LocationBar
-import com.example.myweather.feature_weather.presentation.weather.components.CurrentWeatherBox
-import com.example.myweather.feature_weather.presentation.weather.components.CurrentInformationBox
+import com.example.myweather.feature_weather.presentation.components.LocationBar
+import com.example.myweather.feature_weather.presentation.components.CurrentWeatherBox
+import com.example.myweather.feature_weather.presentation.components.CurrentInformationBox
 import com.example.myweather.ui.theme.MyWeatherTheme
 
 
 @Composable
 fun WeatherScreen(
     context: Context,
-    viewModel: WeatherViewModel = hiltViewModel(),
-    viewModelSet : SettingsViewModel = hiltViewModel()
+    viewModel: WeatherViewModel = hiltViewModel()
 ) {
     val scrollState = rememberScrollState(0)
     val state = viewModel.state.value
+    val painter : Painter = if (state.weatherData != null) {
+        val id = WeatherMainMap.getWeatherMainMap()[state.weatherData?.currentWeatherMain]
+        painterResource(id = id!!)
+    } else {
+        painterResource(id = R.drawable.image_weather_sunny_with_clouds)
+    }
     MyWeatherTheme {
         Surface(
             modifier = Modifier
@@ -52,16 +57,15 @@ fun WeatherScreen(
                     CurrentWeatherBox(
                         currentTemperature = it.currentTemperature,
                         feelsLike = it.feelsLike,
-                        isCelsius = viewModelSet.state.value.isCelsius,
-                        painter = painterResource(id = R.drawable.image_weather_cloudy),
+                        isCelsius = state.isCelsius,
+                        painter = painter,
                         weatherDescription = it.currentWeatherDescription
                     )
                 }
 
                 state.weatherData?.let {
                     CurrentInformationBox(
-                        // TODO: set dynamic
-                        isCelsius = viewModelSet.state.value.isCelsius,
+                        isCelsius = state.isCelsius,
                         minTemperature = it.minTemp,
                         maxTemperature = it.maxTemp,
                         airPressure = it.airPressure,
