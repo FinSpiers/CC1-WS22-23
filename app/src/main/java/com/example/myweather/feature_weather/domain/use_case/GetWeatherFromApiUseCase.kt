@@ -1,6 +1,7 @@
 package com.example.myweather.feature_weather.domain.use_case
 
 import android.util.Log
+import androidx.compose.ui.text.intl.Locale
 import com.example.myweather.feature_weather.data.data_source.network.NoConnectivityException
 import com.example.myweather.feature_weather.domain.model.CurrentWeatherData
 import com.example.myweather.feature_weather.domain.repository.WeatherRepository
@@ -17,7 +18,7 @@ class GetWeatherFromApiUseCase @Inject constructor(
         lat: Double,
         lon: Double,
         unit: String = "metric",
-        language: String = "en"
+        language: String = Locale.current.language
     ): Flow<CurrentWeatherData?> = flow {
         try {
             val currentWeatherData = repository.getCurrentWeatherAsync(lat, lon, unit, language)

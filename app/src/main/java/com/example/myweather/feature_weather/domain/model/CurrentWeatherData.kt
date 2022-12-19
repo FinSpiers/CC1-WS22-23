@@ -10,7 +10,7 @@ const val CURRENT_WEATHER_ID = 0
 data class CurrentWeatherData(
     val timeStamp: Long = 0,
     var location: String = "Test",
-    val isCelsius: Boolean = true,
+    var isCelsius: Boolean = true,
     val currentTemperature: Double = 0.0,
     val currentWeatherMain: String = "",
     val currentWeatherDescription: String = "Test",
