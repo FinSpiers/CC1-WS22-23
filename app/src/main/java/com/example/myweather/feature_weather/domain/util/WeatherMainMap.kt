@@ -11,6 +11,7 @@ object WeatherMainMap {
         weatherMainMap["Snow"] = R.drawable.image_weather_snow
         weatherMainMap["Extreme"] = R.drawable.image_weather_extreme
         weatherMainMap["Sun"] = R.drawable.image_weather_sunny
+        weatherMainMap["Fog"] = R.drawable.image_weather_fog
     }
 
     fun getWeatherMainMap() : LinkedHashMap<String, Int> {
