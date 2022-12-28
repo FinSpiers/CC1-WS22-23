@@ -1,8 +1,11 @@
 package com.example.myweather.feature_weather.domain.repository
 
 import com.example.myweather.feature_weather.domain.model.CurrentWeatherData
+import com.example.myweather.feature_weather.domain.model.Position
 
 interface WeatherRepository {
+    var lastKnownPosition : Position
+
     suspend fun getCurrentWeatherDataFromDb() : CurrentWeatherData?
 
     suspend fun setCurrentWeatherDataInDb(weatherData: CurrentWeatherData)
@@ -13,4 +16,8 @@ interface WeatherRepository {
         unit: String,
         language: String
     ): CurrentWeatherData?
+
+    suspend fun getLastKnownPosition() : Position?
+
+    suspend fun setLastKnownPosition(value : Position)
 }

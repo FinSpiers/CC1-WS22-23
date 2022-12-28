@@ -19,12 +19,9 @@ class GetWeatherFromApiUseCase @Inject constructor(
         lon: Double,
         unit: String = "metric",
         language: String = Locale.current.language
-    ): Flow<CurrentWeatherData?> = flow {
+    ): CurrentWeatherData? {
         try {
-            val currentWeatherData = repository.getCurrentWeatherAsync(lat, lon, unit, language)
-            if (currentWeatherData != null) {
-                emit(currentWeatherData)
-            }
+            return repository.getCurrentWeatherAsync(lat, lon, unit, language)
         }
         catch (e : IOException) {
             Log.e("connectivity", "Error, couldn't connect to server")

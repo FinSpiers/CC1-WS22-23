@@ -1,12 +1,13 @@
 package com.example.myweather.feature_weather.domain.util
 
 import java.time.*
+import java.time.format.DateTimeFormatter
 
 object TimestampDatetimeConverter {
     fun convertToDatetime(timestamp: Long) : String {
         var dateTime = ""
 
-        val dt = Instant.ofEpochSecond(timestamp.toLong())
+        val dt = Instant.ofEpochSecond(timestamp)
             .atZone(ZoneId.systemDefault())
             .toLocalDateTime()
 

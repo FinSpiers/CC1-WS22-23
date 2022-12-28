@@ -12,6 +12,7 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.myweather.R
+import kotlin.math.roundToInt
 
 @Composable
 fun CurrentInformationBar(
@@ -75,14 +76,14 @@ fun CurrentInformationBar(
                     painter = painterResource(id = R.drawable.ic_baseline_arrow_upward_24),
                     contentDescription = null
                 )
-                Text(text = if (isCelsius) "${maxTemperature}°C" else "${maxTemperature}°F")
+                Text(text = if (isCelsius) "${maxTemperature.roundToInt()}°C" else "${maxTemperature.roundToInt()}°F")
             }
             Row(
                 Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(text = if (isCelsius) "${minTemperature}°C" else "${minTemperature}°F")
+                Text(text = if (isCelsius) "${minTemperature.roundToInt()}°C" else "${minTemperature.roundToInt()}°F")
                 Icon(
                     painter = painterResource(id = R.drawable.ic_baseline_arrow_downward_24),
                     contentDescription = "daily min temperature"

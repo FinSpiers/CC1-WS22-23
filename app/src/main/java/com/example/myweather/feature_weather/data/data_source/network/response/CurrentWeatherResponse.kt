@@ -4,9 +4,11 @@ import com.example.myweather.feature_weather.domain.model.CurrentWeatherData
 import com.google.gson.annotations.SerializedName
 
 data class CurrentWeatherResponse(
+    val coord: Coord,
     val cod: Int,
     val dt: Int,
     val main: Main,
+
     @SerializedName("name")
     val locationName: String,
     val weather: List<Weather>,
@@ -16,6 +18,8 @@ data class CurrentWeatherResponse(
 
 fun CurrentWeatherResponse.toCurrentWeatherData() : CurrentWeatherData {
     return CurrentWeatherData(
+        lat = coord.lat,
+        lon = coord.lon,
         timeStamp = (dt + timezone).toLong(),
         location = locationName,
         isCelsius = true,
