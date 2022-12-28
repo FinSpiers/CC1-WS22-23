@@ -1,6 +1,7 @@
 package com.example.myweather.di
 
 import android.app.Application
+import android.content.Context
 import androidx.room.Room
 import com.example.myweather.feature_environment_data.data.repository.EnvironmentDataRepositoryImpl
 import com.example.myweather.feature_environment_data.domain.model.*
@@ -12,11 +13,8 @@ import com.example.myweather.feature_weather.data.data_source.database.WeatherDa
 import com.example.myweather.feature_weather.data.data_source.network.OpenWeatherApiService
 import com.example.myweather.feature_weather.data.repository.WeatherRepositoryImpl
 import com.example.myweather.feature_weather.domain.repository.WeatherRepository
-import com.example.myweather.feature_weather.domain.use_case.GetWeatherFromApiUseCase
+import com.example.myweather.feature_weather.domain.use_case.*
 
-import com.example.myweather.feature_weather.domain.use_case.GetWeatherFromDatabaseUseCase
-import com.example.myweather.feature_weather.domain.use_case.SaveWeatherToDatabaseUseCase
-import com.example.myweather.feature_weather.domain.use_case.WeatherUseCases
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -34,6 +32,12 @@ object AppModule {
             SettingsDatabase::class.java,
             SettingsDatabase.DATABASE_NAME
         ).build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideContext(app : Application): Context {
+        return app.applicationContext
     }
 
     @Provides
@@ -73,7 +77,9 @@ object AppModule {
         return WeatherUseCases(
             getWeatherFromApiUseCase = GetWeatherFromApiUseCase(repository),
             getWeatherFromDatabaseUseCase = GetWeatherFromDatabaseUseCase(repository),
-            saveWeatherToDatabaseUseCase = SaveWeatherToDatabaseUseCase(repository)
+            saveWeatherToDatabaseUseCase = SaveWeatherToDatabaseUseCase(repository),
+            getLastKnownPositionUseCase = GetLastKnownPositionUseCase(repository),
+            setLastKnownPositionUseCase = SetLastKnownPositionUseCase(repository)
         )
     }
 

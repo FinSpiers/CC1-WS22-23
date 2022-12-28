@@ -20,6 +20,7 @@ import com.example.myweather.feature_weather.presentation.components.LocationBar
 import com.example.myweather.feature_weather.presentation.components.CurrentWeatherBox
 import com.example.myweather.feature_weather.presentation.components.CurrentInformationBox
 import com.example.myweather.ui.theme.MyWeatherTheme
+import kotlin.math.roundToInt
 
 
 @Composable
@@ -29,7 +30,7 @@ fun WeatherScreen(
 ) {
     val scrollState = rememberScrollState(0)
     val state = viewModel.state.value
-    val painter : Painter = if (state.weatherData != null) {
+    val painter : Painter = if (state.weatherData != null && WeatherMainMap.getWeatherMainMap().containsKey(state.weatherData?.currentWeatherMain)) {
         val id = WeatherMainMap.getWeatherMainMap()[state.weatherData?.currentWeatherMain]
         painterResource(id = id!!)
     } else {
@@ -50,7 +51,7 @@ fun WeatherScreen(
                     locationName = state.weatherData?.location,
                     dateTime = state.weatherData?.let {
                         TimestampDatetimeConverter.convertToDatetime(
-                            it.timeStamp)
+                            it.timeStamp).dropLast(3)
                     }
                 )
                 state.weatherData?.let {

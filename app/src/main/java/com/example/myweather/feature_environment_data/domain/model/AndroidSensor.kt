@@ -17,6 +17,11 @@ abstract class AndroidSensor(
 
     private lateinit var sensorManager: SensorManager
     private var sensor: Sensor? = null
+    private var isListening = false
+
+    override fun isListening() : Boolean {
+        return isListening
+    }
 
     override fun startListening() {
         if (!sensorExists) {
@@ -28,6 +33,7 @@ abstract class AndroidSensor(
         }
         sensor?.let {
             sensorManager.registerListener(this, it, SensorManager.SENSOR_DELAY_NORMAL)
+            isListening = true
         }
     }
 
@@ -36,6 +42,7 @@ abstract class AndroidSensor(
             return
         }
         sensorManager.unregisterListener(this)
+        isListening = false
     }
 
     override fun onSensorChanged(event: SensorEvent?) {
@@ -48,4 +55,5 @@ abstract class AndroidSensor(
     }
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) = Unit
+
 }

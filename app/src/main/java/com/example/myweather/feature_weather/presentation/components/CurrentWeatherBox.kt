@@ -20,6 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.myweather.R
 import com.example.myweather.ui.theme.MyWeatherTheme
+import kotlin.math.roundToInt
 
 @Composable
 fun CurrentWeatherBox(
@@ -53,8 +54,8 @@ fun CurrentWeatherBox(
                     .padding(vertical = 4.dp)
             )
         }
-        val text : String = if(isCelsius == true) "$currentTemperature°C" else "$currentTemperature°F"
-        val textFeelsLike : String = if(isCelsius == true) "$feelsLike°C" else "$feelsLike°F"
+        val text : String = if(isCelsius == true) "${currentTemperature?.roundToInt()}°C" else "${currentTemperature?.roundToInt()}°F"
+        val textFeelsLike : String = if(isCelsius == true) "${feelsLike?.roundToInt()}°C" else "${feelsLike?.roundToInt()}°F"
 
         Text(
             text = text,
