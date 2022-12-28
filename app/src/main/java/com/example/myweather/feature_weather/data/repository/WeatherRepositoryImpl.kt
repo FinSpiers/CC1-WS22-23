@@ -4,13 +4,16 @@ import com.example.myweather.feature_weather.data.data_source.database.CurrentWe
 import com.example.myweather.feature_weather.data.data_source.network.OpenWeatherApiService
 import com.example.myweather.feature_weather.data.data_source.network.response.toCurrentWeatherData
 import com.example.myweather.feature_weather.domain.model.CurrentWeatherData
+import com.example.myweather.feature_weather.domain.model.Position
 import com.example.myweather.feature_weather.domain.repository.WeatherRepository
 
 class WeatherRepositoryImpl (
      private val dao: CurrentWeatherDataDao,
      private val apiService: OpenWeatherApiService = OpenWeatherApiService()
  ) : WeatherRepository {
-     override suspend fun getCurrentWeatherDataFromDb(): CurrentWeatherData? {
+    override var lastKnownPosition: Position = Position(0.0, 0.0)
+
+    override suspend fun getCurrentWeatherDataFromDb(): CurrentWeatherData? {
          return dao.getCurrentWeatherData()
      }
 
@@ -22,5 +25,13 @@ class WeatherRepositoryImpl (
          return apiService.getCurrentWeatherAsync(lat, lon, unit, language).await().toCurrentWeatherData()
      }
 
+    override suspend fun getLastKnownPosition(): Position {
+        return lastKnownPosition
+    }
 
- }
+    override suspend fun setLastKnownPosition(value: Position) {
+        lastKnownPosition = value
+    }
+
+
+}

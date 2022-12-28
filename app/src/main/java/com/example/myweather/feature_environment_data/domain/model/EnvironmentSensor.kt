@@ -13,6 +13,8 @@ abstract class EnvironmentSensor(
 
     abstract fun stopListening()
 
+    abstract fun isListening() : Boolean
+
     fun setOnSensorValuesChangedListener(listener: ((List<Float>) -> Unit)) {
         onSensorValuesChanged = listener
     }
