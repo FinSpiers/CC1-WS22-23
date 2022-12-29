@@ -51,7 +51,7 @@ fun WeatherScreen(
                     locationName = state.weatherData?.location,
                     dateTime = state.weatherData?.let {
                         TimestampDatetimeConverter.convertToDatetime(
-                            it.timeStamp).dropLast(3)
+                            it.timeStamp)
                     }
                 )
                 state.weatherData?.let {
@@ -72,7 +72,7 @@ fun WeatherScreen(
                         airPressure = it.airPressure,
                         humidity = it.humidity,
                         windSpeed = it.windSpeed,
-                        windDirection = WindDegreeConverter.convertToDirection(it.windDeg, context)
+                        windDirection = WindDegreeConverter(context).convertToDirection(it.windDeg)
                     )
                 }
                 Spacer(modifier = Modifier.height(100.dp))

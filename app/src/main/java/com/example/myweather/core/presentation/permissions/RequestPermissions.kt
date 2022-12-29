@@ -1,5 +1,6 @@
 package com.example.myweather.core.presentation.permissions
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.location.LocationListener
@@ -18,19 +19,18 @@ import com.example.myweather.feature_weather.domain.repository.WeatherRepository
 import com.example.myweather.feature_weather.domain.use_case.WeatherUseCases
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionState
+import com.google.accompanist.permissions.rememberPermissionState
 import kotlinx.coroutines.*
 import javax.inject.Inject
 
-@SuppressLint("MissingPermission")
+@SuppressLint("MissingPermission", "CoroutineCreationDuringComposition")
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun RequestPermissions(
-    permissionState: PermissionState,
-    locationManager: LocationManager,
-    weatherUseCases: WeatherUseCases,
+    weatherRepository: WeatherRepository,
     context: Context
 ) {
-    lateinit var locationListener: LocationListener
+    val permissionState = rememberPermissionState(permission = Manifest.permission.ACCESS_FINE_LOCATION)
     val lifecycleOwner = LocalLifecycleOwner.current
     DisposableEffect(
         key1 = lifecycleOwner, effect = {
@@ -47,22 +47,12 @@ fun RequestPermissions(
         })
     when {
         permissionState.hasPermission -> {
-            Log.i("permission", "location permission was granted")
-            locationListener = LocationListener { location ->
-                val position = Position(location.latitude, location.longitude)
-                Log.e("Position", position.toString())
-                val job = lifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
-                    weatherUseCases.setLastKnownPositionUseCase(position)
-                }
+            lifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
+                weatherRepository.setLocationPermissionGranted(true)
             }
-            locationManager.requestLocationUpdates(
-                LocationManager.GPS_PROVIDER,
-                0,
-                0f,
-                locationListener
-            )
-        }
+            Log.i("permission", "location permission was granted")
 
+        }
         permissionState.shouldShowRationale -> {
             Toast.makeText(context, "Permission should be requested", Toast.LENGTH_LONG).show()
         }
@@ -77,6 +67,3 @@ fun RequestPermissions(
     }
 }
 
-private fun checkPermissions() {
-
-}

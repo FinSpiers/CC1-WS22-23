@@ -2,10 +2,13 @@ package com.example.myweather.feature_weather.domain.util
 
 import android.content.Context
 import com.example.myweather.R
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
 
-object WindDegreeConverter {
-    fun convertToDirection(degree: Int, context: Context?): String {
-        if (context != null) {
+class WindDegreeConverter @Inject constructor(
+    private val context: Context
+    ) {
+    fun convertToDirection(degree: Int): String {
             return when (degree) {
                 in 26..64 -> {
                     context.applicationContext.resources.getString(R.string.ne)
@@ -30,7 +33,5 @@ object WindDegreeConverter {
                 }
                 else -> context.applicationContext.resources.getString(R.string.n)
             }
-        }
-        return "F"
     }
 }

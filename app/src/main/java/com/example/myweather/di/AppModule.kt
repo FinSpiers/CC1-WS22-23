@@ -2,6 +2,7 @@ package com.example.myweather.di
 
 import android.app.Application
 import android.content.Context
+import android.location.LocationManager
 import androidx.room.Room
 import com.example.myweather.feature_environment_data.data.repository.EnvironmentDataRepositoryImpl
 import com.example.myweather.feature_environment_data.domain.model.*
@@ -35,9 +36,14 @@ object AppModule {
     }
 
     @Provides
-    @Singleton
     fun provideContext(app : Application): Context {
         return app.applicationContext
+    }
+
+    @Provides
+    @Singleton
+    fun provideLocationManager(app : Application) : LocationManager {
+        return app.applicationContext.getSystemService(Context.LOCATION_SERVICE) as LocationManager
     }
 
     @Provides
