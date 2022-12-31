@@ -20,8 +20,8 @@ import com.example.myweather.ui.theme.MyWeatherTheme
 @Composable
 fun CurrentInformationBox(
     isCelsius: Boolean,
-    minTemperature: Double,
-    maxTemperature: Double,
+    minTemperature: Int,
+    maxTemperature: Int,
     airPressure: Int,
     humidity: Int,
     windSpeed: Double,
@@ -63,13 +63,5 @@ fun CurrentInformationBox(
             humidity = humidity
         )
 
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun WeatherTodayInfoBoxPreview() {
-    MyWeatherTheme {
-        CurrentInformationBox(true, -6.0, 1.5, 1017, 51, 1.54, "NE")
     }
 }

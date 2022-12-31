@@ -24,8 +24,8 @@ import kotlin.math.roundToInt
 
 @Composable
 fun CurrentWeatherBox(
-    currentTemperature: Double?,
-    feelsLike : Double?,
+    currentTemperature: Int?,
+    feelsLike : Int?,
     isCelsius: Boolean?,
     painter: Painter?,
     weatherDescription: String?,
@@ -54,8 +54,8 @@ fun CurrentWeatherBox(
                     .padding(vertical = 4.dp)
             )
         }
-        val text : String = if(isCelsius == true) "${currentTemperature?.roundToInt()}°C" else "${currentTemperature?.roundToInt()}°F"
-        val textFeelsLike : String = if(isCelsius == true) "${feelsLike?.roundToInt()}°C" else "${feelsLike?.roundToInt()}°F"
+        val text : String = if(isCelsius == true) "${currentTemperature}°C" else "${currentTemperature}°F"
+        val textFeelsLike : String = if(isCelsius == true) "${feelsLike}°C" else "${feelsLike}°F"
 
         Text(
             text = text,
@@ -89,19 +89,5 @@ fun CurrentWeatherBox(
             color = MaterialTheme.colorScheme.primary
         )
         Spacer(modifier = Modifier.height(8.dp))
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun WeatherInfoBoxPreview() {
-    MyWeatherTheme {
-        CurrentWeatherBox(
-            currentTemperature = -1.5,
-            feelsLike = -2.5,
-            isCelsius = true,
-            painter = painterResource(id = R.drawable.image_weather_sunny_with_clouds),
-            weatherDescription = "No discription available"
-        )
     }
 }

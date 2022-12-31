@@ -16,8 +16,8 @@ import kotlin.math.roundToInt
 
 @Composable
 fun CurrentInformationBar(
-    minTemperature: Double,
-    maxTemperature: Double,
+    minTemperature: Int,
+    maxTemperature: Int,
     isCelsius: Boolean,
     airPressure: Int,
     humidity: Int
@@ -76,14 +76,14 @@ fun CurrentInformationBar(
                     painter = painterResource(id = R.drawable.ic_baseline_arrow_upward_24),
                     contentDescription = null
                 )
-                Text(text = if (isCelsius) "${maxTemperature.roundToInt()}°C" else "${maxTemperature.roundToInt()}°F")
+                Text(text = if (isCelsius) "${maxTemperature}°C" else "${maxTemperature}°F")
             }
             Row(
                 Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(text = if (isCelsius) "${minTemperature.roundToInt()}°C" else "${minTemperature.roundToInt()}°F")
+                Text(text = if (isCelsius) "${minTemperature}°C" else "${minTemperature}°F")
                 Icon(
                     painter = painterResource(id = R.drawable.ic_baseline_arrow_downward_24),
                     contentDescription = "daily min temperature"

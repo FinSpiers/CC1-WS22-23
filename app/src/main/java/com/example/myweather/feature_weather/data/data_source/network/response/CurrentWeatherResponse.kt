@@ -2,6 +2,7 @@ package com.example.myweather.feature_weather.data.data_source.network.response
 
 import com.example.myweather.feature_weather.domain.model.CurrentWeatherData
 import com.google.gson.annotations.SerializedName
+import kotlin.math.roundToInt
 
 data class CurrentWeatherResponse(
     val coord: Coord,
@@ -23,14 +24,14 @@ fun CurrentWeatherResponse.toCurrentWeatherData() : CurrentWeatherData {
         timeStamp = (dt + timezone).toLong(),
         location = locationName,
         isCelsius = true,
-        currentTemperature = main.temp,
+        currentTemperature = main.temp.roundToInt(),
         currentWeatherMain = weather[0].main,
         currentWeatherDescription = weather[0].description,
-        feelsLike = main.feelsLike,
+        feelsLike = main.feelsLike.roundToInt(),
         airPressure = main.pressure,
         humidity = main.humidity,
-        minTemp = main.tempMin,
-        maxTemp = main.tempMax,
+        minTemp = main.tempMin.roundToInt(),
+        maxTemp = main.tempMax.roundToInt(),
         windSpeed = wind.speed,
         windDeg = wind.deg
     )

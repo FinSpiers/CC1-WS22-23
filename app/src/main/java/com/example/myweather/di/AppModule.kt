@@ -1,8 +1,10 @@
 package com.example.myweather.di
 
+import android.Manifest
 import android.app.Application
 import android.content.Context
 import android.location.LocationManager
+import androidx.compose.runtime.Composable
 import androidx.room.Room
 import com.example.myweather.feature_environment_data.data.repository.EnvironmentDataRepositoryImpl
 import com.example.myweather.feature_environment_data.domain.model.*
@@ -15,6 +17,9 @@ import com.example.myweather.feature_weather.data.data_source.network.OpenWeathe
 import com.example.myweather.feature_weather.data.repository.WeatherRepositoryImpl
 import com.example.myweather.feature_weather.domain.repository.WeatherRepository
 import com.example.myweather.feature_weather.domain.use_case.*
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.PermissionState
+import com.google.accompanist.permissions.rememberPermissionState
 
 import dagger.Module
 import dagger.Provides
@@ -36,6 +41,7 @@ object AppModule {
     }
 
     @Provides
+    @Singleton
     fun provideContext(app : Application): Context {
         return app.applicationContext
     }

@@ -5,6 +5,7 @@ import com.example.myweather.feature_weather.domain.model.Position
 
 interface WeatherRepository {
     var locationPermissionGranted : Boolean
+    var locationPermissionDenied : Boolean
     var lastKnownPosition : Position
 
     suspend fun getCurrentWeatherDataFromDb() : CurrentWeatherData?
@@ -25,4 +26,8 @@ interface WeatherRepository {
     fun isLocationPermissionGranted() : Boolean
 
     suspend fun setLocationPermissionGranted(value : Boolean)
+
+    fun isLocationPermissionDenied() : Boolean
+
+    suspend fun setLocationPermissionDenied(value : Boolean)
 }

@@ -12,6 +12,7 @@ class WeatherRepositoryImpl (
      private val apiService: OpenWeatherApiService = OpenWeatherApiService()
  ) : WeatherRepository {
     override var locationPermissionGranted: Boolean = false
+    override var locationPermissionDenied: Boolean = false
     override var lastKnownPosition: Position = Position(0.0, 0.0)
 
     override suspend fun getCurrentWeatherDataFromDb(): CurrentWeatherData? {
@@ -40,5 +41,13 @@ class WeatherRepositoryImpl (
 
     override suspend fun setLocationPermissionGranted(value: Boolean) {
         locationPermissionGranted = value
+    }
+
+    override fun isLocationPermissionDenied(): Boolean {
+        return locationPermissionDenied
+    }
+
+    override suspend fun setLocationPermissionDenied(value: Boolean) {
+        locationPermissionDenied = value
     }
 }
