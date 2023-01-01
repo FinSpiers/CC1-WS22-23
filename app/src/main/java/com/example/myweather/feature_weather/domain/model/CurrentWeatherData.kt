@@ -3,20 +3,19 @@ package com.example.myweather.feature_weather.domain.model
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.myweather.core.domain.util.CelsiusFahrenheitConverter
-import com.example.myweather.feature_weather.data.data_source.database.WeatherDatabase
 
 const val CURRENT_WEATHER_ID = 0
 
-@Entity(tableName = WeatherDatabase.DATABASE_NAME)
+@Entity(tableName = "currentWeatherData")
 data class CurrentWeatherData(
     var lat : Double = 0.0,
     var lon : Double = 0.0,
     var timeStamp: Long = 0,
-    var location: String = "Unknown",
+    var location: String = "Unknown yet, please wait...",
     var isCelsius: Boolean = true,
     var currentTemperature: Int = 0,
     var currentWeatherMain: String = "",
-    var currentWeatherDescription: String = "No data available yet...",
+    var currentWeatherDescription: String = "No data available yet",
     var feelsLike: Int = 0,
     var airPressure: Int = 0,
     var humidity: Int = 0,

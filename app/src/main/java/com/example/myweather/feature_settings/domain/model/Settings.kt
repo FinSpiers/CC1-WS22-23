@@ -1,12 +1,11 @@
-package com.example.myweather.core.domain.model
+package com.example.myweather.feature_settings.domain.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.myweather.core.data.data_source.SettingsDatabase
 
 const val CURRENT_SETTINGS_ID = 0
 
-@Entity(tableName = SettingsDatabase.DATABASE_NAME)
+@Entity(tableName = "settings")
 class Settings(
     var isCelsius: Boolean = true
 ) {

@@ -8,7 +8,7 @@ import com.example.myweather.feature_weather.domain.model.CurrentWeatherData
 
 @Dao
 interface CurrentWeatherDataDao {
-    @Query("SELECT * FROM weather_db")
+    @Query("SELECT * FROM CurrentWeatherData")
     suspend fun getCurrentWeatherData() : CurrentWeatherData?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

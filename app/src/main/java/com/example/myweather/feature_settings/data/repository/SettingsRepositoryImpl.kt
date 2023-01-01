@@ -1,8 +1,8 @@
-package com.example.myweather.core.data.repository
+package com.example.myweather.feature_settings.data.repository
 
-import com.example.myweather.core.data.data_source.SettingsDao
-import com.example.myweather.core.domain.model.Settings
-import com.example.myweather.core.domain.repository.SettingsRepository
+import com.example.myweather.feature_settings.data.data_source.database.SettingsDao
+import com.example.myweather.feature_settings.domain.model.Settings
+import com.example.myweather.feature_settings.domain.repository.SettingsRepository
 
 class SettingsRepositoryImpl(
     private val settingsDao: SettingsDao

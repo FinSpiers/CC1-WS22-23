@@ -1,6 +1,6 @@
-package com.example.myweather.core.domain.repository
+package com.example.myweather.feature_settings.domain.repository
 
-import com.example.myweather.core.domain.model.Settings
+import com.example.myweather.feature_settings.domain.model.Settings
 
 interface SettingsRepository {
     suspend fun getSettingsFromDatabase() : Settings?
