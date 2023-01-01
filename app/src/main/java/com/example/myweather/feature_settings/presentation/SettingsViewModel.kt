@@ -1,11 +1,11 @@
-package com.example.myweather.core.presentation.settings
+package com.example.myweather.feature_settings.presentation
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.myweather.core.domain.model.Settings
-import com.example.myweather.core.domain.repository.SettingsRepository
+import com.example.myweather.feature_settings.domain.model.Settings
+import com.example.myweather.feature_settings.domain.repository.SettingsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

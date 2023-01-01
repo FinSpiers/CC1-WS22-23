@@ -1,6 +1,6 @@
 package com.example.myweather.feature_weather.data.data_source.network
 
-import com.example.myweather.core.domain.model.Settings
+import com.example.myweather.feature_settings.domain.model.Settings
 import com.example.myweather.feature_weather.data.data_source.network.response.CurrentWeatherResponse
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import kotlinx.coroutines.Deferred

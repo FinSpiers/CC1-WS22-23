@@ -1,4 +1,4 @@
-package com.example.myweather.core.presentation.settings
+package com.example.myweather.feature_settings.presentation
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -13,7 +13,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.myweather.R
-import com.example.myweather.core.domain.model.Settings
 
 @Composable
 fun SettingsScreen(
