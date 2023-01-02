@@ -4,12 +4,16 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.example.myweather.feature_environment_data.domain.model.*
 import com.example.myweather.feature_environment_data.domain.repository.EnvironmentDataRepository
+import com.example.myweather.feature_settings.domain.model.Settings
+import com.example.myweather.feature_settings.domain.repository.SettingsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 @HiltViewModel
 class EnvironmentDataViewModel @Inject constructor(
     private val environmentDataRepository: EnvironmentDataRepository,
+    private val settingsRepository: SettingsRepository,
 ) : ViewModel() {
     var temperatureSensor: EnvironmentSensor = environmentDataRepository.getTemperatureSensor()
     var lightSensor: EnvironmentSensor = environmentDataRepository.getLightSensor()
@@ -21,7 +25,12 @@ class EnvironmentDataViewModel @Inject constructor(
     val airPressureSensorState = mutableStateOf(0.0)
     val relativeHumiditySensorState = mutableStateOf(0.0)
 
+    var settings: Settings
+
     init {
+        runBlocking {
+            settings = settingsRepository.getSettingsFromDatabase() ?: Settings()
+        }
         temperatureSensor.setOnSensorValuesChangedListener { values ->
             temperatureSensorState.value = values[0].toDouble()
         }

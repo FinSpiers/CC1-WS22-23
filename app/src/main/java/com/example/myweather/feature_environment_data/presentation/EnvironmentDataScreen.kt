@@ -11,6 +11,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.myweather.R
+import com.example.myweather.core.domain.util.CelsiusFahrenheitConverter
 import com.example.myweather.feature_environment_data.presentation.components.EnvironmentSensorDisplay
 import kotlin.math.roundToInt
 
@@ -24,6 +25,9 @@ fun EnvironmentDataScreen(
     val airPressureSensorState = viewModel.airPressureSensorState.value.roundToInt()
     val relativeHumiditySensorState = viewModel.relativeHumiditySensorState.value.roundToInt()
     val scrollState = rememberScrollState(0)
+
+    val isCelsius = viewModel.settings.isCelsius
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -34,8 +38,10 @@ fun EnvironmentDataScreen(
     ) {
         EnvironmentSensorDisplay(
             sensor = stringResource(id = R.string.ambient_air_temperature),
-            sensorData = temperatureSensorState.toString(),
-            unit = stringResource(id = R.string.celsius_unit),
+            sensorData = ((if (isCelsius) temperatureSensorState.toString()
+            else CelsiusFahrenheitConverter.convertToFahrenheit(temperatureSensorState)).toString()),
+            unit = if (isCelsius) stringResource(id = R.string.celsius_unit)
+            else stringResource(id = R.string.fahrenheit_unit),
             painter = painterResource(
                 id = R.drawable.icon_temperature
             )
