@@ -26,4 +26,9 @@
     <string name="w">W</string>
     <string name="nw">NW</string>
     <string name="n">N</string>
+
+    <string name="permission_requested_text">Hallo! Um Ihnen die genauesten Wetterinformationen zu liefern, benötigen wir Zugriff auf den Standort Ihres Geräts. Auf diese Weise können wir Wetterdaten für Ihren aktuellen Standort abrufen.</string>
+    <string name="permission_requested_text_part_2">Bitte geben Sie uns die Erlaubnis, auf den Standort Ihres Geräts zuzugreifen, indem Sie in den Einstellungen Ihres Geräts zu \"App-Einstellungen\" > \"MyWeather\" > \"Berechtigungen\" gehen und den Schalter \"Standort\" aktivieren. Vielen Dank, dass Sie uns dabei helfen, Ihnen die bestmögliche Wetter-Erfahrung zu bieten.</string>
+
+    <string name="_continue">Fortfahren</string>
 </resources>

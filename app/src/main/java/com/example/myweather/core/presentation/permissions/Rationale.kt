@@ -1,8 +1,6 @@
 package com.example.myweather.core.presentation.permissions
 
-
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CornerSize
@@ -13,14 +11,10 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import com.example.myweather.ui.theme.MyWeatherTheme
-
-
 
 @Composable
 fun Rationale(onDismiss : () -> Unit, onContinue : () -> Unit) {
@@ -30,33 +24,20 @@ fun Rationale(onDismiss : () -> Unit, onContinue : () -> Unit) {
             color = MaterialTheme.colorScheme.surface
         ) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Icon(imageVector = Icons.Default.LocationOn, contentDescription = "location", modifier = Modifier.size(40.dp))
+                Icon(imageVector = Icons.Default.LocationOn, contentDescription = "location", modifier = Modifier.size(40.dp).padding(top = 8.dp))
                 Text(
-                    text = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
-                    modifier = Modifier.padding(16.dp)
+                    text = LocalContext.current.resources.getString(com.example.myweather.R.string.permission_requested_text),
+                    modifier = Modifier.padding(horizontal = 16.dp).padding(top = 16.dp),
+                    style = MaterialTheme.typography.headlineSmall
                 )
-                Button(onClick = { onContinue() }) {
-                    Text(text = "Continue")
+                Text(
+                    text = LocalContext.current.resources.getString(com.example.myweather.R.string.permission_requested_text_part_2),
+                    modifier = Modifier.padding(horizontal = 16.dp).padding(bottom = 16.dp)
+                )
+                Button(onClick = { onContinue() }, modifier = Modifier.padding(bottom = 8.dp)) {
+                    Text(text = LocalContext.current.resources.getString(com.example.myweather.R.string._continue))
                 }
             }
         }
-    }
-}
-
-
-@Preview(showBackground = true)
-@Composable
-fun RationalePreview(){
-    fun onDismiss() {
-        println("dismiss request")
-    }
-
-    fun onContinue() {
-        onDismiss()
-        println("continue request")
-    }
-
-    MyWeatherTheme {
-        Rationale(onDismiss = { onDismiss() }, onContinue = { onContinue() })
     }
 }
