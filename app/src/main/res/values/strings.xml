@@ -35,4 +35,6 @@
     <string name="permission_requested_text_part_2">Please grant us permission to access your device\'s location by going to your device\'s Settings > App Settings > MyWeather > Permissions and turning on the Location toggle. Thank you for helping us provide you with the best weather experience possible.</string>
     <string name="_continue">Continue</string>
 
+    <string name="permission_permanently_denied_text">Permission permanently denied. You can enable it via app settings.</string>
+
 </resources>

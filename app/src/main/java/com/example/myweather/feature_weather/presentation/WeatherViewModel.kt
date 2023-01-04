@@ -25,8 +25,7 @@ class WeatherViewModel
 @Inject constructor(
     private val weatherRepository: WeatherRepository,
     private val settingsRepository: SettingsRepository,
-    private val locationManager: LocationManager,
-    private val context: Context
+    private val locationManager: LocationManager
 ) : ViewModel() {
     private val _state = mutableStateOf(WeatherState())
     val state: State<WeatherState> = _state
@@ -60,6 +59,18 @@ class WeatherViewModel
         }
         this.onEvent(WeatherEvent.OnLocationChange)
     }
+
+    fun setLocationPermissionGranted(){
+        viewModelScope.launch(Dispatchers.IO) {
+            weatherRepository.setLocationPermissionGranted(true)
+        }
+    }
+    fun setLocationPermissionDenied(){
+        viewModelScope.launch(Dispatchers.IO) {
+            weatherRepository.setLocationPermissionDenied(true)
+        }
+    }
+
 
     private fun initiate() {
         if (weatherRepository.locationPermissionGranted) {
