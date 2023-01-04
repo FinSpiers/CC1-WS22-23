@@ -5,6 +5,7 @@ import android.content.Context
 import com.example.myweather.feature_environment_data.domain.model.*
 import com.example.myweather.feature_environment_data.domain.repository.EnvironmentDataRepository
 
+// This repository gives the environment sensors
 class EnvironmentDataRepositoryImpl(val context: Context) : EnvironmentDataRepository {
 
     override fun getTemperatureSensor(): EnvironmentSensor {

@@ -15,17 +15,20 @@ import com.example.myweather.core.domain.util.CelsiusFahrenheitConverter
 import com.example.myweather.feature_environment_data.presentation.components.EnvironmentSensorDisplay
 import kotlin.math.roundToInt
 
+// View of the app
 @Composable
 fun EnvironmentDataScreen(
     viewModel: EnvironmentDataViewModel = hiltViewModel()
 ) {
 
+    // Environment Sensor values from the view-model
     val temperatureSensorState = viewModel.temperatureSensorState.value.roundToInt()
     val lightSensorState = viewModel.lightSensorState.value.roundToInt()
     val airPressureSensorState = viewModel.airPressureSensorState.value.roundToInt()
     val relativeHumiditySensorState = viewModel.relativeHumiditySensorState.value.roundToInt()
     val scrollState = rememberScrollState(0)
 
+    // Boolean from the user settings to change the temperature values and unit
     val isCelsius = viewModel.settings.isCelsius
 
     Column(
@@ -71,6 +74,5 @@ fun EnvironmentDataScreen(
             )
         )
         Spacer(modifier = Modifier.height(100.dp))
-
     }
 }

@@ -10,16 +10,23 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
+// View-model of the app
 @HiltViewModel
 class EnvironmentDataViewModel @Inject constructor(
     private val environmentDataRepository: EnvironmentDataRepository,
     private val settingsRepository: SettingsRepository,
 ) : ViewModel() {
-    var temperatureSensor: EnvironmentSensor = environmentDataRepository.getTemperatureSensor()
-    var lightSensor: EnvironmentSensor = environmentDataRepository.getLightSensor()
-    var airPressureSensor: EnvironmentSensor = environmentDataRepository.getAirPressureSensor()
-    var relativeHumiditySensor: EnvironmentSensor = environmentDataRepository.getRelativeHumiditySensor()
 
+    // Gets the environment sensors from the repository
+    private var temperatureSensor: EnvironmentSensor =
+        environmentDataRepository.getTemperatureSensor()
+    private var lightSensor: EnvironmentSensor =
+        environmentDataRepository.getLightSensor()
+    private var airPressureSensor: EnvironmentSensor =
+        environmentDataRepository.getAirPressureSensor()
+    private var relativeHumiditySensor: EnvironmentSensor =
+        environmentDataRepository.getRelativeHumiditySensor()
+    // States for the environment sensor values
     val temperatureSensorState = mutableStateOf(0.0)
     val lightSensorState = mutableStateOf(0.0)
     val airPressureSensorState = mutableStateOf(0.0)
@@ -28,9 +35,13 @@ class EnvironmentDataViewModel @Inject constructor(
     var settings: Settings
 
     init {
+        // Imports user settings
         runBlocking {
             settings = settingsRepository.getSettingsFromDatabase() ?: Settings()
         }
+
+        // First sets where to save the environment sensor values from the listener
+        // Then starts the listener for each environment sensor
         temperatureSensor.setOnSensorValuesChangedListener { values ->
             temperatureSensorState.value = values[0].toDouble()
         }
@@ -55,9 +66,9 @@ class EnvironmentDataViewModel @Inject constructor(
         if (!relativeHumiditySensor.isListening()) {
             relativeHumiditySensor.startListening()
         }
-
     }
 
+    // Stops the environment sensor listeners
     override fun onCleared() {
         super.onCleared()
         temperatureSensor.stopListening()
@@ -65,5 +76,4 @@ class EnvironmentDataViewModel @Inject constructor(
         lightSensor.stopListening()
         relativeHumiditySensor.stopListening()
     }
-
 }
