@@ -6,8 +6,11 @@ import android.content.Context
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.runtime.*
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.lifecycleScope
+import com.example.myweather.R
 import com.example.myweather.feature_weather.domain.repository.WeatherRepository
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberPermissionState
@@ -17,8 +20,8 @@ import kotlinx.coroutines.*
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun RequestPermissions(
-    weatherRepository: WeatherRepository,
-    context: Context
+    setLocationPermissionGranted : () -> Unit,
+    setLocationPermissionDenied : () -> Unit,
 ) {
     val permissionState =
         rememberPermissionState(permission = Manifest.permission.ACCESS_FINE_LOCATION)
@@ -26,12 +29,7 @@ fun RequestPermissions(
     val lifecycleOwner = LocalLifecycleOwner.current
     when {
         permissionState.hasPermission -> {
-            val job = lifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
-                weatherRepository.setLocationPermissionGranted(true)
-            }
-            runBlocking {
-                job.join()
-            }
+            setLocationPermissionGranted()
         }
         permissionState.shouldShowRationale -> {
             Rationale(
@@ -46,14 +44,12 @@ fun RequestPermissions(
             }
         }
         !permissionState.hasPermission && !permissionState.shouldShowRationale -> {
+            setLocationPermissionDenied()
             Toast.makeText(
-                context,
-                "Permission permanently denied. You can enable it via app settings.",
+                LocalContext.current,
+                stringResource(id = R.string.permission_permanently_denied_text),
                 Toast.LENGTH_LONG
             ).show()
-            lifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
-                weatherRepository.setLocationPermissionDenied(true)
-            }
         }
     }
 }

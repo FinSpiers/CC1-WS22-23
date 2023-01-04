@@ -1,6 +1,5 @@
 package com.example.myweather.feature_weather.presentation
 
-import android.content.Context
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -9,10 +8,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.myweather.R
+import com.example.myweather.core.presentation.permissions.RequestPermissions
 import com.example.myweather.feature_weather.domain.util.TimestampDatetimeConverter
 import com.example.myweather.feature_weather.domain.util.WeatherMainMap
 import com.example.myweather.feature_weather.domain.util.WindDegreeConverter
@@ -20,22 +21,27 @@ import com.example.myweather.feature_weather.presentation.components.LocationBar
 import com.example.myweather.feature_weather.presentation.components.CurrentWeatherBox
 import com.example.myweather.feature_weather.presentation.components.CurrentInformationBox
 import com.example.myweather.ui.theme.MyWeatherTheme
-import kotlin.math.roundToInt
 
 
 @Composable
 fun WeatherScreen(
-    context: Context,
     viewModel: WeatherViewModel = hiltViewModel()
 ) {
     val scrollState = rememberScrollState(0)
     val state = viewModel.state.value
-    val painter : Painter = if (state.weatherData != null && WeatherMainMap.getWeatherMainMap().containsKey(state.weatherData?.currentWeatherMain)) {
+    val painter: Painter = if (state.weatherData != null && WeatherMainMap.getWeatherMainMap()
+            .containsKey(state.weatherData?.currentWeatherMain)
+    ) {
         val id = WeatherMainMap.getWeatherMainMap()[state.weatherData?.currentWeatherMain]
         painterResource(id = id!!)
     } else {
         painterResource(id = R.drawable.image_weather_sunny_with_clouds)
     }
+    RequestPermissions(
+        setLocationPermissionGranted = { viewModel.setLocationPermissionGranted() },
+        setLocationPermissionDenied = { viewModel.setLocationPermissionDenied() }
+    )
+
     MyWeatherTheme {
         Surface(
             modifier = Modifier
@@ -51,7 +57,8 @@ fun WeatherScreen(
                     locationName = state.weatherData?.location,
                     dateTime = state.weatherData?.let {
                         TimestampDatetimeConverter.convertToDatetime(
-                            it.timeStamp)
+                            it.timeStamp
+                        )
                     }
                 )
                 state.weatherData?.let {
@@ -72,7 +79,7 @@ fun WeatherScreen(
                         airPressure = it.airPressure,
                         humidity = it.humidity,
                         windSpeed = it.windSpeed,
-                        windDirection = WindDegreeConverter(context).convertToDirection(it.windDeg)
+                        windDirection = WindDegreeConverter(LocalContext.current).convertToDirection(it.windDeg)
                     )
                 }
                 Spacer(modifier = Modifier.height(100.dp))

@@ -13,7 +13,6 @@ import androidx.navigation.compose.rememberNavController
 import com.example.myweather.core.presentation.navigationbar.NavigationBarState
 import com.example.myweather.core.presentation.navigationbar.components.BottomNavigationBar
 import com.example.myweather.core.presentation.navigationbar.components.NavigationSetup
-import com.example.myweather.core.presentation.permissions.RequestPermissions
 import com.example.myweather.feature_weather.domain.repository.WeatherRepository
 import com.example.myweather.ui.theme.MyWeatherTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -36,10 +35,6 @@ class MainActivity : ComponentActivity() {
             viewModel = hiltViewModel()
             viewModel.setNavController(navController)
             navigationState = viewModel.navState.value
-            RequestPermissions(
-                weatherRepository = weatherRepository,
-                context = this
-            )
 
             MyWeatherTheme {
                 Surface {
@@ -50,8 +45,7 @@ class MainActivity : ComponentActivity() {
                     ) {
                         NavigationSetup(
                             navController = navController,
-                            startDestination = navigationState.currentRoute,
-                            context = this
+                            startDestination = navigationState.currentRoute
                         )
                     }
                 }
