@@ -1,4 +1,4 @@
-package com.example.myweather.core.presentation.permissions
+package com.example.myweather.feature_weather.presentation.permissions
 
 import android.Manifest
 import android.annotation.SuppressLint

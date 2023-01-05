@@ -17,6 +17,8 @@ import com.example.myweather.feature_weather.domain.model.Position
 import com.example.myweather.feature_weather.domain.repository.WeatherRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import java.io.IOException
 import javax.inject.Inject
 
@@ -29,6 +31,9 @@ class WeatherViewModel
 ) : ViewModel() {
     private val _state = mutableStateOf(WeatherState())
     val state: State<WeatherState> = _state
+
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading = _isLoading.asStateFlow()
 
     private var settings: Settings
     private var locationListener: LocationListener? = null
@@ -118,8 +123,9 @@ class WeatherViewModel
         locationListener?.let { locationManager.removeUpdates(it) }
     }
 
-    private fun getWeatherDataFromServer(): CurrentWeatherData? {
+    fun getWeatherDataFromServer(): CurrentWeatherData? {
         viewModelScope.launch(Dispatchers.IO) {
+            _isLoading.value = true
             var position = Position(0.0, 0.0)
             if (lastKnownPosition != null) {
                 position = lastKnownPosition as Position
@@ -144,6 +150,8 @@ class WeatherViewModel
             } catch (e: IOException) {
                 onEvent(WeatherEvent.NoNetworkConnection)
             }
+            delay(1000)
+            _isLoading.value = false
         }
         return _state.value.weatherData
     }
@@ -156,7 +164,7 @@ class WeatherViewModel
         return weatherRepository.setCurrentWeatherDataInDb(currentWeatherData)
     }
 
-    private fun onEvent(event: WeatherEvent) {
+    fun onEvent(event: WeatherEvent) {
         when (event) {
             is WeatherEvent.NoNetworkConnection -> {
                 viewModelScope.launch {
@@ -196,9 +204,6 @@ class WeatherViewModel
                         )
                     }
                 }
-            }
-            is WeatherEvent.RequestLocationPermission -> {
-                TODO()
             }
             is WeatherEvent.UpdateCurrentWeatherData -> {
                 viewModelScope.launch {
