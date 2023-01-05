@@ -1,11 +1,7 @@
 package com.example.myweather.feature_weather.presentation
-
 import android.annotation.SuppressLint
-import android.content.Context
 import android.location.LocationListener
 import android.location.LocationManager
-import android.util.Log
-import android.widget.Toast
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.text.intl.Locale
@@ -30,24 +26,37 @@ class WeatherViewModel
     private val settingsRepository: SettingsRepository,
     private val locationManager: LocationManager
 ) : ViewModel() {
+    // Create mutable weather state
     private val _state = mutableStateOf(WeatherState())
     val state: State<WeatherState> = _state
 
+    // Create mutable state flow for isLoading
     private val _isLoading = MutableStateFlow(false)
     val isLoading = _isLoading.asStateFlow()
 
+    // Create vars settings, locationListener and lastKnownPosition
     private var settings: Settings
     private var locationListener: LocationListener? = null
     private var lastKnownPosition: Position? = null
 
     init {
+        // Load the settings from the database (ensure that settings are initialised)
         runBlocking {
             settings = settingsRepository.getSettingsFromDatabase() ?: Settings()
         }
+
+        // Call initiate function to wait for permission request to finish
         initiate()
+
+        // Launch a coroutine that loads the weather data from the database
         viewModelScope.launch {
+            // Set state.isCelsius corresponding to the settings
             _state.value = _state.value.copy(isCelsius = settings.isCelsius)
+
+            // Get weather data from database
             val weatherData = getWeatherDataFromDatabase()
+
+            // Update state (if needed)
             if (weatherData != null) {
                 _state.value = _state.value.copy(
                     timeStamp = weatherData.timeStamp,
@@ -55,6 +64,7 @@ class WeatherViewModel
                     isCelsius = weatherData.isCelsius
                 )
             }
+            // Set state.weatherData to default weather data
             else {
                 _state.value = _state.value.copy(
                     timeStamp = 0,
@@ -63,29 +73,33 @@ class WeatherViewModel
                 )
             }
         }
-        this.onEvent(WeatherEvent.OnLocationChange)
     }
 
+    // Function that launches a coroutine and set the location permission to granted in the repo
     fun setLocationPermissionGranted(){
         viewModelScope.launch(Dispatchers.IO) {
             weatherRepository.setLocationPermissionGranted(true)
         }
     }
+
+    // Function that launches a coroutine and set the location permission to denied in the repo
     fun setLocationPermissionDenied(){
         viewModelScope.launch(Dispatchers.IO) {
             weatherRepository.setLocationPermissionDenied(true)
         }
     }
 
-
+    // Recursive function that runs until either the location permission is granted or denied
     private fun initiate() {
         if (weatherRepository.locationPermissionGranted) {
+            // Init location listener (ensure that listener is initialised)
             runBlocking {
                 initLocationListener()
             }
+            // Register location listener
             registerListener()
-
-        } else if (!weatherRepository.locationPermissionDenied || !weatherRepository.locationPermissionGranted) {
+        }
+        else if (!weatherRepository.locationPermissionDenied || !weatherRepository.locationPermissionGranted) {
             // launch a coroutine that delays for 1 second and then call this function again
             viewModelScope.launch {
                 delay(1000)
@@ -95,6 +109,7 @@ class WeatherViewModel
     }
 
     private fun initLocationListener() {
+        // Init location listener that sets the last known position in repo and fires an onLocationChange event on change
         locationListener = LocationListener { location ->
             val pos = Position(location.latitude, location.longitude)
             if (lastKnownPosition != pos) {
@@ -106,6 +121,7 @@ class WeatherViewModel
 
     @SuppressLint("MissingPermission")
     private fun registerListener() {
+        // Register the listener if gps is enabled
         if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             locationListener?.let {
                 locationManager.requestLocationUpdates(
@@ -119,25 +135,32 @@ class WeatherViewModel
     }
 
     private fun unregisterListener() {
+        // Unregister the listener
         locationListener?.let { locationManager.removeUpdates(it) }
     }
 
     private fun getWeatherDataFromServer(): CurrentWeatherData? {
+        // Set isLoading to true for swipe to refresh
+        _isLoading.value = true
         viewModelScope.launch(Dispatchers.IO) {
-            _isLoading.value = true
+            // Get the last known position by the repo
             var position = Position(0.0, 0.0)
             if (lastKnownPosition != null) {
                 position = lastKnownPosition as Position
             }
 
+            // Set unit either to celsius or fahrenheit depending on the settings
             val unit: String = if (settings.isCelsius) "metric" else "imperial"
+
+            // Set language to english or german (depending on the system language)
             val language: String = if (Locale.current.language == "de") "de" else "en"
+
             try {
                 // Request current weather data from server with parameters as above
                 weatherRepository.getCurrentWeatherAsync(position.lat, position.lon, unit, language)
                     ?.let {
+                        // Update state
                         it.isCelsius = settings.isCelsius
-
                         _state.value = _state.value.copy(
                             timeStamp = it.timeStamp,
                             weatherData = it,
@@ -147,9 +170,10 @@ class WeatherViewModel
                         saveWeatherToDatabase(it)
                     }
             } catch (e: IOException) {
+                // Fire off NoNetworkConnection event
                 onEvent(WeatherEvent.NoNetworkConnection)
             }
-            delay(500)
+            // Set isLoading to false
             _isLoading.value = false
         }
         return _state.value.weatherData
@@ -205,11 +229,13 @@ class WeatherViewModel
                 }
             }
             is WeatherEvent.UpdateCurrentWeatherData -> {
+                // Update the current weather data
                 viewModelScope.launch {
                     getWeatherDataFromServer()
                 }
             }
             WeatherEvent.OnLocationChange -> {
+                // Request weather data for the new location
                 viewModelScope.launch {
                     if (lastKnownPosition != null) {
                         val weatherData = getWeatherDataFromServer()
@@ -219,6 +245,7 @@ class WeatherViewModel
                                 weatherData = weatherData,
                                 isCelsius = weatherData.isCelsius
                             )
+                            // Save current weather data to database
                             saveWeatherToDatabase(weatherData)
                         }
                     }
