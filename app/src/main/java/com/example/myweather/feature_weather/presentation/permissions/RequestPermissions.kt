@@ -20,8 +20,8 @@ import kotlinx.coroutines.*
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun RequestPermissions(
-    setLocationPermissionGranted : () -> Unit,
-    setLocationPermissionDenied : () -> Unit,
+    setLocationPermissionGranted: () -> Unit,
+    setLocationPermissionDenied: () -> Unit,
 ) {
     val permissionState =
         rememberPermissionState(permission = Manifest.permission.ACCESS_FINE_LOCATION)
@@ -34,12 +34,15 @@ fun RequestPermissions(
         permissionState.shouldShowRationale -> {
             Rationale(
                 onDismiss = { isDialogShown.value = false },
-                onContinue = { permissionState.launchPermissionRequest() })
+                onContinue = {
+                    permissionState.launchPermissionRequest()
+                }
+            )
             isDialogShown.value = true
         }
 
         !permissionState.permissionRequested -> {
-            lifecycleOwner.lifecycleScope.launchWhenResumed {
+            SideEffect {
                 permissionState.launchPermissionRequest()
             }
         }

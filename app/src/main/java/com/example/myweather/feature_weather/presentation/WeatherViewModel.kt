@@ -5,6 +5,7 @@ import android.content.Context
 import android.location.LocationListener
 import android.location.LocationManager
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.text.intl.Locale
@@ -84,10 +85,9 @@ class WeatherViewModel
             }
             registerListener()
 
-        } else if (weatherRepository.locationPermissionDenied) {
-            /* TODO */
-        } else {
-            val job = viewModelScope.launch {
+        } else if (!weatherRepository.locationPermissionDenied || !weatherRepository.locationPermissionGranted) {
+            // launch a coroutine that delays for 1 second and then call this function again
+            viewModelScope.launch {
                 delay(1000)
                 initiate()
             }
@@ -99,7 +99,6 @@ class WeatherViewModel
             val pos = Position(location.latitude, location.longitude)
             if (lastKnownPosition != pos) {
                 lastKnownPosition = pos
-                Log.e("POSITION", "${pos.lat}, ${pos.lon}")
                 this.onEvent(WeatherEvent.OnLocationChange)
             }
         }
@@ -111,7 +110,7 @@ class WeatherViewModel
             locationListener?.let {
                 locationManager.requestLocationUpdates(
                     LocationManager.GPS_PROVIDER,
-                    0,
+                    1000,
                     0f,
                     it
                 )
@@ -123,7 +122,7 @@ class WeatherViewModel
         locationListener?.let { locationManager.removeUpdates(it) }
     }
 
-    fun getWeatherDataFromServer(): CurrentWeatherData? {
+    private fun getWeatherDataFromServer(): CurrentWeatherData? {
         viewModelScope.launch(Dispatchers.IO) {
             _isLoading.value = true
             var position = Position(0.0, 0.0)
@@ -150,7 +149,7 @@ class WeatherViewModel
             } catch (e: IOException) {
                 onEvent(WeatherEvent.NoNetworkConnection)
             }
-            delay(1000)
+            delay(500)
             _isLoading.value = false
         }
         return _state.value.weatherData

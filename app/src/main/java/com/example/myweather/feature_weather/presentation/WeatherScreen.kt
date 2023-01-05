@@ -68,7 +68,7 @@ fun WeatherScreen(
                         dateTime = state.weatherData?.let {
                             TimestampDatetimeConverter.convertToDatetime(
                                 it.timeStamp
-                            )
+                            ).dropLast(3)
                         }
                     )
                     state.weatherData?.let {
