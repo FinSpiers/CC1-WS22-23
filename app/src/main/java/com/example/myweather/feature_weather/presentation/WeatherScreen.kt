@@ -5,6 +5,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
@@ -13,7 +15,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.myweather.R
-import com.example.myweather.core.presentation.permissions.RequestPermissions
+import com.example.myweather.feature_weather.presentation.permissions.RequestPermissions
 import com.example.myweather.feature_weather.domain.util.TimestampDatetimeConverter
 import com.example.myweather.feature_weather.domain.util.WeatherMainMap
 import com.example.myweather.feature_weather.domain.util.WindDegreeConverter
@@ -21,6 +23,8 @@ import com.example.myweather.feature_weather.presentation.components.LocationBar
 import com.example.myweather.feature_weather.presentation.components.CurrentWeatherBox
 import com.example.myweather.feature_weather.presentation.components.CurrentInformationBox
 import com.example.myweather.ui.theme.MyWeatherTheme
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
 
 @Composable
@@ -29,6 +33,8 @@ fun WeatherScreen(
 ) {
     val scrollState = rememberScrollState(0)
     val state = viewModel.state.value
+    val isLoading by viewModel.isLoading.collectAsState()
+    val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = isLoading)
     val painter: Painter = if (state.weatherData != null && WeatherMainMap.getWeatherMainMap()
             .containsKey(state.weatherData?.currentWeatherMain)
     ) {
@@ -47,43 +53,49 @@ fun WeatherScreen(
             modifier = Modifier
                 .fillMaxSize()
         ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .verticalScroll(scrollState),
-                horizontalAlignment = Alignment.CenterHorizontally,
+            SwipeRefresh(
+                state = swipeRefreshState,
+                onRefresh = { viewModel.onEvent(WeatherEvent.UpdateCurrentWeatherData) }
             ) {
-                LocationBar(
-                    locationName = state.weatherData?.location,
-                    dateTime = state.weatherData?.let {
-                        TimestampDatetimeConverter.convertToDatetime(
-                            it.timeStamp
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .verticalScroll(scrollState),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
+                    LocationBar(
+                        locationName = state.weatherData?.location,
+                        dateTime = state.weatherData?.let {
+                            TimestampDatetimeConverter.convertToDatetime(
+                                it.timeStamp
+                            ).dropLast(3)
+                        }
+                    )
+                    state.weatherData?.let {
+                        CurrentWeatherBox(
+                            currentTemperature = it.currentTemperature,
+                            feelsLike = it.feelsLike,
+                            isCelsius = state.isCelsius,
+                            painter = painter,
+                            weatherDescription = it.currentWeatherDescription
                         )
                     }
-                )
-                state.weatherData?.let {
-                    CurrentWeatherBox(
-                        currentTemperature = it.currentTemperature,
-                        feelsLike = it.feelsLike,
-                        isCelsius = state.isCelsius,
-                        painter = painter,
-                        weatherDescription = it.currentWeatherDescription
-                    )
-                }
 
-                state.weatherData?.let {
-                    CurrentInformationBox(
-                        isCelsius = state.isCelsius,
-                        minTemperature = it.minTemp,
-                        maxTemperature = it.maxTemp,
-                        airPressure = it.airPressure,
-                        humidity = it.humidity,
-                        windSpeed = it.windSpeed,
-                        windDirection = WindDegreeConverter(LocalContext.current).convertToDirection(it.windDeg)
-                    )
+                    state.weatherData?.let {
+                        CurrentInformationBox(
+                            isCelsius = state.isCelsius,
+                            minTemperature = it.minTemp,
+                            maxTemperature = it.maxTemp,
+                            airPressure = it.airPressure,
+                            humidity = it.humidity,
+                            windSpeed = it.windSpeed,
+                            windDirection = WindDegreeConverter(LocalContext.current).convertToDirection(it.windDeg)
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(100.dp))
                 }
-                Spacer(modifier = Modifier.height(100.dp))
             }
+
         }
     }
 }

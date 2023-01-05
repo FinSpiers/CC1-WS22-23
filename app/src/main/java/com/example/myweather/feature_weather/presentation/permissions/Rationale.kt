@@ -1,4 +1,4 @@
-package com.example.myweather.core.presentation.permissions
+package com.example.myweather.feature_weather.presentation.permissions
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding

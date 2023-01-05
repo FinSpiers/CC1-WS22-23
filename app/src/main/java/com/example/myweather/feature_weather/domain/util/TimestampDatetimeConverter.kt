@@ -18,7 +18,7 @@ object TimestampDatetimeConverter {
             .forEach { str -> dateTime += "$str." }
 
         dateTime = dateTime.dropLast(1)
-        dateTime += ", ${dt.toLocalTime()}".dropLast(3)
+        dateTime += ", ${dt.toLocalTime()}"
         return dateTime
     }
 }
