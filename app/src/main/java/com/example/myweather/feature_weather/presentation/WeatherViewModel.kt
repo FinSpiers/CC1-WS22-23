@@ -1,4 +1,5 @@
 package com.example.myweather.feature_weather.presentation
+
 import android.annotation.SuppressLint
 import android.location.LocationListener
 import android.location.LocationManager
@@ -19,6 +20,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import java.io.IOException
 import javax.inject.Inject
 
+@SuppressLint("MissingPermission")
 @HiltViewModel
 class WeatherViewModel
 @Inject constructor(
@@ -43,8 +45,11 @@ class WeatherViewModel
         // Load the settings from the database (ensure that settings are initialised)
         runBlocking {
             settings = settingsRepository.getSettingsFromDatabase() ?: Settings()
+            //lastKnownPosition = weatherRepository.getLastKnownPosition()
+            locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)?.let {
+                lastKnownPosition = Position(it.latitude, it.longitude)
+            }
         }
-
         // Call initiate function to wait for permission request to finish
         initiate()
 
@@ -69,21 +74,22 @@ class WeatherViewModel
                 _state.value = _state.value.copy(
                     timeStamp = 0,
                     weatherData = CurrentWeatherData(),
-                    isCelsius = true
+                    isCelsius = settings.isCelsius
                 )
             }
         }
+        setWeatherDataFromServer()
     }
 
     // Function that launches a coroutine and set the location permission to granted in the repo
-    fun setLocationPermissionGranted(){
+    fun setLocationPermissionGranted() {
         viewModelScope.launch(Dispatchers.IO) {
             weatherRepository.setLocationPermissionGranted(true)
         }
     }
 
     // Function that launches a coroutine and set the location permission to denied in the repo
-    fun setLocationPermissionDenied(){
+    fun setLocationPermissionDenied() {
         viewModelScope.launch(Dispatchers.IO) {
             weatherRepository.setLocationPermissionDenied(true)
         }
@@ -98,8 +104,7 @@ class WeatherViewModel
             }
             // Register location listener
             registerListener()
-        }
-        else if (!weatherRepository.locationPermissionDenied || !weatherRepository.locationPermissionGranted) {
+        } else if (!weatherRepository.locationPermissionDenied || !weatherRepository.locationPermissionGranted) {
             // launch a coroutine that delays for 1 second and then call this function again
             viewModelScope.launch {
                 delay(1000)
@@ -126,10 +131,18 @@ class WeatherViewModel
             locationListener?.let {
                 locationManager.requestLocationUpdates(
                     LocationManager.GPS_PROVIDER,
-                    1000,
+                    60*1000,
                     0f,
                     it
                 )
+            }
+        }
+        val location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+        location?.let {
+            val pos = Position(location.latitude, location.longitude)
+            lastKnownPosition = pos
+            viewModelScope.launch(Dispatchers.IO) {
+                weatherRepository.setLastKnownPosition(pos)
             }
         }
     }
@@ -139,10 +152,11 @@ class WeatherViewModel
         locationListener?.let { locationManager.removeUpdates(it) }
     }
 
-    private fun getWeatherDataFromServer(): CurrentWeatherData? {
-        // Set isLoading to true for swipe to refresh
-        _isLoading.value = true
+    private fun setWeatherDataFromServer(): CurrentWeatherData? {
         viewModelScope.launch(Dispatchers.IO) {
+            // Set isLoading to true for swipe to refresh
+            _isLoading.value = true
+
             // Get the last known position by the repo
             var position = Position(0.0, 0.0)
             if (lastKnownPosition != null) {
@@ -230,26 +244,11 @@ class WeatherViewModel
             }
             is WeatherEvent.UpdateCurrentWeatherData -> {
                 // Update the current weather data
-                viewModelScope.launch {
-                    getWeatherDataFromServer()
-                }
+                setWeatherDataFromServer()
             }
             WeatherEvent.OnLocationChange -> {
                 // Request weather data for the new location
-                viewModelScope.launch {
-                    if (lastKnownPosition != null) {
-                        val weatherData = getWeatherDataFromServer()
-                        if (weatherData != null) {
-                            _state.value = _state.value.copy(
-                                timeStamp = weatherData.timeStamp,
-                                weatherData = weatherData,
-                                isCelsius = weatherData.isCelsius
-                            )
-                            // Save current weather data to database
-                            saveWeatherToDatabase(weatherData)
-                        }
-                    }
-                }
+                setWeatherDataFromServer()
             }
         }
     }
