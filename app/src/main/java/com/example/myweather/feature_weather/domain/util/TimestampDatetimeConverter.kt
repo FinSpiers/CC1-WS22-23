@@ -1,8 +1,8 @@
 package com.example.myweather.feature_weather.domain.util
 
 import java.time.*
-import java.time.format.DateTimeFormatter
 
+// Helper object that provides a function to convert an utc timestamp into a formatted dateTime string
 object TimestampDatetimeConverter {
     fun convertToDatetime(timestamp: Long) : String {
         var dateTime = ""

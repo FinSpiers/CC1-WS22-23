@@ -15,7 +15,10 @@ import com.example.myweather.core.presentation.util.Screen
 
 @Composable
 fun BottomNavigationBar(viewModel: MainViewModel) {
+    // Get navigation bar state from viewModel
     val navBarState = viewModel.navState.value
+
+    // Create a list containing a BottomNavItem for each destination
     val items = listOf(
         BottomNavItem.Companion.Weather(
             index = 0,
@@ -36,7 +39,9 @@ fun BottomNavigationBar(viewModel: MainViewModel) {
             painterResource(id = R.drawable.ic_baseline_settings_24)
         ),
     )
+    // Create a navigation bar
     NavigationBar {
+        // Add a NavigationBarItem for each BottomNavItem
         items.forEach { item ->
             NavigationBarItem(
                 icon = {
@@ -47,7 +52,9 @@ fun BottomNavigationBar(viewModel: MainViewModel) {
                     )
                 },
                 label = { Text(text = item.title, style = MaterialTheme.typography.bodyMedium) },
+                // Set item selected if it's route is equal to the current route of the navBarState
                 selected = item.route == navBarState.currentRoute,
+                // Fire NavigationBarEvent when clicked at one of the navigationBarItem
                 onClick = {
                     when (item.index) {
                         0 -> viewModel.onEvent(NavigationBarEvent.WeatherTabClick)

@@ -26,15 +26,23 @@ import com.example.myweather.ui.theme.MyWeatherTheme
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
-
 @Composable
 fun WeatherScreen(
     viewModel: WeatherViewModel = hiltViewModel()
 ) {
+    // Create and remember scrollState
     val scrollState = rememberScrollState(0)
+
+    // Get the state by the viewModel
     val state = viewModel.state.value
+
+    // Get isLoading by viewModel as state
     val isLoading by viewModel.isLoading.collectAsState()
+
+    // Create and remember swipeRefreshState with isRefreshing = onLoading
     val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = isLoading)
+
+    // Define a painter for each case the weather main description could be
     val painter: Painter = if (state.weatherData != null && WeatherMainMap.getWeatherMainMap()
             .containsKey(state.weatherData?.currentWeatherMain)
     ) {
@@ -43,6 +51,8 @@ fun WeatherScreen(
     } else {
         painterResource(id = R.drawable.image_weather_sunny_with_clouds)
     }
+
+    // Check permission request
     RequestPermissions(
         setLocationPermissionGranted = { viewModel.setLocationPermissionGranted() },
         setLocationPermissionDenied = { viewModel.setLocationPermissionDenied() }
@@ -65,6 +75,7 @@ fun WeatherScreen(
                 ) {
                     LocationBar(
                         locationName = state.weatherData?.location,
+                        // Use TimestampConverter to convert timestamp into dateTime
                         dateTime = state.weatherData?.let {
                             TimestampDatetimeConverter.convertToDatetime(
                                 it.timeStamp
@@ -89,6 +100,7 @@ fun WeatherScreen(
                             airPressure = it.airPressure,
                             humidity = it.humidity,
                             windSpeed = it.windSpeed,
+                            // Make use of the windDegreeConverter
                             windDirection = WindDegreeConverter(LocalContext.current).convertToDirection(it.windDeg)
                         )
                     }

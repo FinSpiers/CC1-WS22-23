@@ -2,6 +2,8 @@ package com.example.myweather.feature_weather.domain.util
 
 import com.example.myweather.R
 
+// Helper object that provides a static hashMap that maps the weather main descriptions and the
+// ID's of the image that should be displayed
 object WeatherMainMap {
     private var weatherMainMap : LinkedHashMap<String, Int> = LinkedHashMap()
 
@@ -16,6 +18,7 @@ object WeatherMainMap {
         weatherMainMap["Drizzle"] = R.drawable.image_weather_drizzle
     }
 
+    // Function to get the hashmap
     fun getWeatherMainMap() : LinkedHashMap<String, Int> {
         return weatherMainMap
     }
