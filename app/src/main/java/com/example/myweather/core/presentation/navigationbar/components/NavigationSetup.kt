@@ -8,8 +8,9 @@ import com.example.myweather.feature_settings.presentation.SettingsScreen
 import com.example.myweather.core.presentation.util.Screen
 import com.example.myweather.feature_environment_data.presentation.EnvironmentDataScreen
 import com.example.myweather.feature_weather.presentation.WeatherScreen
+
 @Composable
-fun NavigationSetup(navController : NavHostController, startDestination : String) {
+fun NavigationSetup(navController: NavHostController, startDestination: String) {
     NavHost(navController = navController, startDestination = startDestination) {
         composable(Screen.WeatherScreen.route) {
             WeatherScreen()

@@ -4,7 +4,7 @@ import java.time.*
 
 // Helper object that provides a function to convert an utc timestamp into a formatted dateTime string
 object TimestampDatetimeConverter {
-    fun convertToDatetime(timestamp: Long) : String {
+    fun convertToDatetime(timestamp: Long): String {
         var dateTime = ""
 
         val dt = Instant.ofEpochSecond(timestamp)

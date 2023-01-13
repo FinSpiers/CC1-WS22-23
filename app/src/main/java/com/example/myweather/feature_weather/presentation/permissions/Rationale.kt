@@ -17,22 +17,32 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 
 @Composable
-fun Rationale(onDismiss : () -> Unit, onContinue : () -> Unit) {
+fun Rationale(onDismiss: () -> Unit, onContinue: () -> Unit) {
     Dialog(onDismissRequest = onDismiss, properties = DialogProperties()) {
         Surface(
             shape = RoundedCornerShape(CornerSize(8.dp)),
             color = MaterialTheme.colorScheme.surface
         ) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Icon(imageVector = Icons.Default.LocationOn, contentDescription = "location", modifier = Modifier.size(40.dp).padding(top = 8.dp))
+                Icon(
+                    imageVector = Icons.Default.LocationOn,
+                    contentDescription = "location",
+                    modifier = Modifier
+                        .size(40.dp)
+                        .padding(top = 8.dp)
+                )
                 Text(
                     text = LocalContext.current.resources.getString(com.example.myweather.R.string.permission_requested_text),
-                    modifier = Modifier.padding(horizontal = 16.dp).padding(top = 16.dp),
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp)
+                        .padding(top = 16.dp),
                     style = MaterialTheme.typography.headlineSmall
                 )
                 Text(
                     text = LocalContext.current.resources.getString(com.example.myweather.R.string.permission_requested_text_part_2),
-                    modifier = Modifier.padding(horizontal = 16.dp).padding(bottom = 16.dp)
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp)
+                        .padding(bottom = 16.dp)
                 )
                 Button(onClick = { onContinue() }, modifier = Modifier.padding(bottom = 8.dp)) {
                     Text(text = LocalContext.current.resources.getString(com.example.myweather.R.string._continue))

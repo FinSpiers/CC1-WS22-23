@@ -12,7 +12,7 @@ interface SettingsDao {
 
     @Transaction
     @Query("SELECT * FROM settings")
-    suspend fun getSettings() : Settings?
+    suspend fun getSettings(): Settings?
 
     @Transaction
     @Insert(onConflict = OnConflictStrategy.REPLACE)

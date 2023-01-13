@@ -49,7 +49,7 @@ class MainViewModel @Inject constructor() : ViewModel() {
 
             // Navigate to the destination (if it's not selected yet), clear the backstack and
             // save the state
-            if (navController != null){
+            if (navController != null) {
                 navController?.navigate(_navState.value.currentRoute) {
                     navController?.graph?.startDestinationRoute?.let { route ->
                         popUpTo(route) {

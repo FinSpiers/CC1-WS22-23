@@ -8,8 +8,8 @@ const val CURRENT_WEATHER_ID = 0
 
 @Entity(tableName = "currentWeatherData")
 data class CurrentWeatherData(
-    var lat : Double = 0.0,
-    var lon : Double = 0.0,
+    var lat: Double = 0.0,
+    var lon: Double = 0.0,
     var timeStamp: Long = 0,
     var location: String = "",
     var isCelsius: Boolean = true,
@@ -27,7 +27,7 @@ data class CurrentWeatherData(
     @PrimaryKey(autoGenerate = false)
     var id: Int = CURRENT_WEATHER_ID
 
-    fun convertToFahrenheit() : CurrentWeatherData {
+    fun convertToFahrenheit(): CurrentWeatherData {
         if (isCelsius) {
             currentTemperature = CelsiusFahrenheitConverter.convertToFahrenheit(currentTemperature)
             feelsLike = CelsiusFahrenheitConverter.convertToFahrenheit(feelsLike)
@@ -38,7 +38,7 @@ data class CurrentWeatherData(
         return this
     }
 
-    fun convertToCelsius() : CurrentWeatherData {
+    fun convertToCelsius(): CurrentWeatherData {
         if (!isCelsius) {
             currentTemperature = CelsiusFahrenheitConverter.convertToCelsius(currentTemperature)
             feelsLike = CelsiusFahrenheitConverter.convertToCelsius(feelsLike)

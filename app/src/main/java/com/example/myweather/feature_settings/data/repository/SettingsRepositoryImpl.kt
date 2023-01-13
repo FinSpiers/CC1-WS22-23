@@ -6,7 +6,7 @@ import com.example.myweather.feature_settings.domain.repository.SettingsReposito
 
 class SettingsRepositoryImpl(
     private val settingsDao: SettingsDao
-    ) : SettingsRepository {
+) : SettingsRepository {
 
     // Function to get the current settings from the database
     override suspend fun getSettingsFromDatabase(): Settings? {

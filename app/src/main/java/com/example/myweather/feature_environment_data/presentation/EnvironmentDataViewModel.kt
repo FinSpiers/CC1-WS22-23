@@ -26,6 +26,7 @@ class EnvironmentDataViewModel @Inject constructor(
         environmentDataRepository.getAirPressureSensor()
     private var relativeHumiditySensor: EnvironmentSensor =
         environmentDataRepository.getRelativeHumiditySensor()
+
     // States for the environment sensor values
     val temperatureSensorState = mutableStateOf(0.0)
     val lightSensorState = mutableStateOf(0.0)

@@ -11,7 +11,7 @@ import com.example.myweather.feature_weather.domain.model.CurrentWeatherData
 interface CurrentWeatherDataDao {
     @Transaction
     @Query("SELECT * FROM CurrentWeatherData")
-    suspend fun getCurrentWeatherData() : CurrentWeatherData?
+    suspend fun getCurrentWeatherData(): CurrentWeatherData?
 
     @Transaction
     @Insert(onConflict = OnConflictStrategy.REPLACE)

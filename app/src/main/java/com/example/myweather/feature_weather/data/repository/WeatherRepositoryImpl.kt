@@ -8,11 +8,11 @@ import com.example.myweather.feature_weather.domain.model.CurrentWeatherData
 import com.example.myweather.feature_weather.domain.model.Position
 import com.example.myweather.feature_weather.domain.repository.WeatherRepository
 
-class WeatherRepositoryImpl (
-     private val dao: CurrentWeatherDataDao,
-     private val apiService: OpenWeatherApiService,
-     override val context : Context
- ) : WeatherRepository {
+class WeatherRepositoryImpl(
+    private val dao: CurrentWeatherDataDao,
+    private val apiService: OpenWeatherApiService,
+    override val context: Context
+) : WeatherRepository {
     // Create boolean vars for permission granted and denied which are set to false initially
     override var locationPermissionGranted: Boolean = false
     override var locationPermissionDenied: Boolean = false
@@ -21,17 +21,23 @@ class WeatherRepositoryImpl (
     override var lastKnownPosition: Position = Position(0.0, 0.0)
 
     override suspend fun getCurrentWeatherDataFromDb(): CurrentWeatherData? {
-         return dao.getCurrentWeatherData()
-     }
+        return dao.getCurrentWeatherData()
+    }
 
-     override suspend fun setCurrentWeatherDataInDb(weatherData: CurrentWeatherData) {
-         return dao.setCurrentWeatherData(weatherData)
-     }
+    override suspend fun setCurrentWeatherDataInDb(weatherData: CurrentWeatherData) {
+        return dao.setCurrentWeatherData(weatherData)
+    }
 
     // Function to get current weather data by api service and parse it to currentWeatherData object
-     override suspend fun getCurrentWeatherAsync(lat : Double, lon : Double, unit : String, language : String) : CurrentWeatherData {
-         return apiService.getCurrentWeatherAsync(lat, lon, unit, language).await().toCurrentWeatherData()
-     }
+    override suspend fun getCurrentWeatherAsync(
+        lat: Double,
+        lon: Double,
+        unit: String,
+        language: String
+    ): CurrentWeatherData {
+        return apiService.getCurrentWeatherAsync(lat, lon, unit, language).await()
+            .toCurrentWeatherData()
+    }
 
     override suspend fun getLastKnownPosition(): Position {
         return lastKnownPosition

@@ -15,7 +15,10 @@ import com.example.myweather.core.presentation.util.Screen
 import kotlin.reflect.KFunction1
 
 @Composable
-fun BottomNavigationBar(navBarState: NavigationBarState, onEvent: KFunction1<NavigationBarEvent, Unit>) {
+fun BottomNavigationBar(
+    navBarState: NavigationBarState,
+    onEvent: KFunction1<NavigationBarEvent, Unit>
+) {
     // Create a list containing a BottomNavItem for each destination
     val items = listOf(
         BottomNavItem.Companion.Weather(

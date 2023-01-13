@@ -38,28 +38,27 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideContext(app : Application): Context {
+    fun provideContext(app: Application): Context {
         return app.applicationContext
     }
 
     @Provides
     @Singleton
-    fun provideLocationManager(app : Application) : LocationManager {
+    fun provideLocationManager(app: Application): LocationManager {
         return app.getSystemService(Context.LOCATION_SERVICE) as LocationManager
     }
 
     @Provides
     @Singleton
-    fun provideConnectivityManager(app : Application) : ConnectivityManager {
+    fun provideConnectivityManager(app: Application): ConnectivityManager {
         return app.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     }
 
     @Provides
     @Singleton
-    fun provideFusedLocationManager(app : Application) : FusedLocationProviderClient {
+    fun provideFusedLocationManager(app: Application): FusedLocationProviderClient {
         return LocationServices.getFusedLocationProviderClient(app.applicationContext)
     }
-
 
 
     @Provides
@@ -86,7 +85,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideSettingsRepository(db : MyWeatherDatabase) : SettingsRepository {
+    fun provideSettingsRepository(db: MyWeatherDatabase): SettingsRepository {
         return SettingsRepositoryImpl(db.settingsDao)
     }
 

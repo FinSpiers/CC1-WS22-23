@@ -16,7 +16,7 @@ const val API_KEY = "b098130e166bdf3ac1341c71af539675"
 
 interface OpenWeatherApiService {
     @GET("/data/2.5/weather")
-    fun getCurrentWeatherAsync (
+    fun getCurrentWeatherAsync(
         @Query("lat") lat: Double,
         @Query("lon") lon: Double,
         @Query("units") unit: String,

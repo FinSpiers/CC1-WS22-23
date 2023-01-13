@@ -16,7 +16,7 @@ import com.example.myweather.R
 
 @Composable
 fun SettingsScreen(
-    viewModel : SettingsViewModel = hiltViewModel()
+    viewModel: SettingsViewModel = hiltViewModel()
 ) {
     val state = viewModel.state.value
     Column(

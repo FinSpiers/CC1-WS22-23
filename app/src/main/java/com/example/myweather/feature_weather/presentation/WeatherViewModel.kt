@@ -147,14 +147,14 @@ class WeatherViewModel
             weatherRepository.getCurrentWeatherAsync(
                 position.lat, position.lon, unit, language
             )?.let {
-                    // Update state
-                    it.isCelsius = settings.isCelsius
-                    _state.value = _state.value.copy(
-                        timeStamp = it.timeStamp, weatherData = it, isCelsius = settings.isCelsius
-                    )
-                    // Save current weather data to database
-                    saveWeatherToDatabase(it)
-                }
+                // Update state
+                it.isCelsius = settings.isCelsius
+                _state.value = _state.value.copy(
+                    timeStamp = it.timeStamp, weatherData = it, isCelsius = settings.isCelsius
+                )
+                // Save current weather data to database
+                saveWeatherToDatabase(it)
+            }
 
         }
     }

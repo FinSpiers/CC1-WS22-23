@@ -99,7 +99,9 @@ fun WeatherScreen(
                             humidity = it.humidity,
                             windSpeed = it.windSpeed,
                             // Make use of the windDegreeConverter
-                            windDirection = WindDegreeConverter(LocalContext.current).convertToDirection(it.windDeg)
+                            windDirection = WindDegreeConverter(LocalContext.current).convertToDirection(
+                                it.windDeg
+                            )
                         )
                     }
                     Spacer(modifier = Modifier.height(100.dp))
