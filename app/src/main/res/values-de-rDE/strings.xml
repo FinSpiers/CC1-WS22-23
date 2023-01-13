@@ -28,9 +28,14 @@
     <string name="n">N</string>
 
     <string name="permission_requested_text">Hallo! Um Ihnen die genauesten Wetterinformationen zu liefern, benötigen wir Zugriff auf den Standort Ihres Geräts. Auf diese Weise können wir Wetterdaten für Ihren aktuellen Standort abrufen.</string>
-    <string name="permission_requested_text_part_2">Bitte geben Sie uns die Erlaubnis, auf den Standort Ihres Geräts zuzugreifen, indem Sie in den Einstellungen Ihres Geräts zu \"App-Einstellungen\" > \"MyWeather\" > \"Berechtigungen\" gehen und den Schalter \"Standort\" aktivieren. Vielen Dank, dass Sie uns dabei helfen, Ihnen die bestmögliche Wetter-Erfahrung zu bieten.</string>
+    <string name="permission_requested_text_part_2">Vielen Dank, dass Sie uns dabei helfen, Ihnen die bestmögliche Wetter-Erfahrung zu bieten.</string>
 
     <string name="_continue">Fortfahren</string>
 
     <string name="permission_permanently_denied_text">Zugriff dauerhaft verweigert. Sie können es in den App-Einstellungen aktivieren.</string>
+    <string name="gps_disabled_text">Kein GPS Signal gefunden.</string>
+    <string name="no_internet_connection_text">Keine Internetverbindung.</string>
+
+    <string name="initial_location_text">Noch keine Daten verfügbar</string>
+    <string name="initial_weather_description_text">Nach unten ziehen zum Neuladen…</string>
 </resources>

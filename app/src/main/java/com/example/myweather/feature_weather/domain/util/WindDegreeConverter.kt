@@ -2,9 +2,10 @@ package com.example.myweather.feature_weather.domain.util
 
 import android.content.Context
 import com.example.myweather.R
-import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
+// Helper class that provides a function to convert a wind direction given in degree
+// to a direction (N, NE, E, ...)
 class WindDegreeConverter @Inject constructor(
     private val context: Context
     ) {
