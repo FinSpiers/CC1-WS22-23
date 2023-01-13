@@ -3,6 +3,7 @@ package com.example.myweather.di
 import android.app.Application
 import android.content.Context
 import android.location.LocationManager
+import android.net.ConnectivityManager
 import androidx.room.Room
 import com.example.myweather.core.data.database.MyWeatherDatabase
 import com.example.myweather.feature_environment_data.data.repository.EnvironmentDataRepositoryImpl
@@ -13,6 +14,8 @@ import com.example.myweather.feature_settings.domain.repository.SettingsReposito
 import com.example.myweather.feature_weather.data.data_source.network.OpenWeatherApiService
 import com.example.myweather.feature_weather.data.repository.WeatherRepositoryImpl
 import com.example.myweather.feature_weather.domain.repository.WeatherRepository
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 
 import dagger.Module
 import dagger.Provides
@@ -42,8 +45,22 @@ object AppModule {
     @Provides
     @Singleton
     fun provideLocationManager(app : Application) : LocationManager {
-        return app.applicationContext.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return app.getSystemService(Context.LOCATION_SERVICE) as LocationManager
     }
+
+    @Provides
+    @Singleton
+    fun provideConnectivityManager(app : Application) : ConnectivityManager {
+        return app.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    }
+
+    @Provides
+    @Singleton
+    fun provideFusedLocationManager(app : Application) : FusedLocationProviderClient {
+        return LocationServices.getFusedLocationProviderClient(app.applicationContext)
+    }
+
+
 
     @Provides
     @Singleton
@@ -55,9 +72,10 @@ object AppModule {
     @Singleton
     fun provideWeatherRepository(
         db: MyWeatherDatabase,
-        apiService: OpenWeatherApiService
+        apiService: OpenWeatherApiService,
+        context: Context
     ): WeatherRepository {
-        return WeatherRepositoryImpl(db.currentWeatherDao, apiService)
+        return WeatherRepositoryImpl(db.currentWeatherDao, apiService, context)
     }
 
     @Provides

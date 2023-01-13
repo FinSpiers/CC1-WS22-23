@@ -8,6 +8,7 @@ sealed class BottomNavItem(
     val title: String,
     val icon: Painter
 ) {
+    // Create a companion object with a BottomNavItem for each destination
     companion object {
         class Weather(index: Int, route: String, title: String, icon: Painter) :
             BottomNavItem(index, route, title, icon)
