@@ -9,15 +9,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.myweather.R
 import com.example.myweather.core.domain.model.BottomNavItem
-import com.example.myweather.core.presentation.MainViewModel
 import com.example.myweather.core.presentation.navigationbar.NavigationBarEvent
+import com.example.myweather.core.presentation.navigationbar.NavigationBarState
 import com.example.myweather.core.presentation.util.Screen
+import kotlin.reflect.KFunction1
 
 @Composable
-fun BottomNavigationBar(viewModel: MainViewModel) {
-    // Get navigation bar state from viewModel
-    val navBarState = viewModel.navState.value
-
+fun BottomNavigationBar(navBarState: NavigationBarState, onEvent: KFunction1<NavigationBarEvent, Unit>) {
     // Create a list containing a BottomNavItem for each destination
     val items = listOf(
         BottomNavItem.Companion.Weather(
@@ -57,9 +55,9 @@ fun BottomNavigationBar(viewModel: MainViewModel) {
                 // Fire NavigationBarEvent when clicked at one of the navigationBarItem
                 onClick = {
                     when (item.index) {
-                        0 -> viewModel.onEvent(NavigationBarEvent.WeatherTabClick)
-                        1 -> viewModel.onEvent(NavigationBarEvent.EnvironmentDataTabClick)
-                        2 -> viewModel.onEvent(NavigationBarEvent.SettingsTabClick)
+                        0 -> onEvent(NavigationBarEvent.WeatherTabClick)
+                        1 -> onEvent(NavigationBarEvent.EnvironmentDataTabClick)
+                        2 -> onEvent(NavigationBarEvent.SettingsTabClick)
                     }
                 },
                 colors = NavigationBarItemDefaults.colors(

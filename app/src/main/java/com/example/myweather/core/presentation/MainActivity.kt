@@ -41,7 +41,10 @@ class MainActivity : ComponentActivity() {
                     // Create a scaffold with a bottom navigation bar
                     Scaffold(
                         bottomBar = {
-                            BottomNavigationBar(viewModel = viewModel)
+                            BottomNavigationBar(
+                                navBarState = viewModel.navState.value,
+                                onEvent = viewModel::onEvent
+                            )
                         }
                     ) {
                         // Setup navigation

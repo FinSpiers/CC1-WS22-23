@@ -11,10 +11,10 @@ import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberPermissionState
 import kotlinx.coroutines.*
 
-@SuppressLint("MissingPermission", "CoroutineCreationDuringComposition")
+@SuppressLint("MissingPermission")
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
-fun RequestPermissions(
+fun CheckPermission(
     setLocationPermissionGranted: () -> Unit,
     setLocationPermissionDenied: () -> Unit,
 ) {
@@ -34,13 +34,20 @@ fun RequestPermissions(
         permissionState.shouldShowRationale -> {
             // Show rationale to user and set isDialogShown value to true
             Rationale(
-                onDismiss = { isDialogShown.value = false },
+                onDismiss = {
+                    // Set location permission to denied
+                    setLocationPermissionDenied()
+
+                    // Hide dialog
+                    isDialogShown.value = false
+                },
                 onContinue = {
                     permissionState.launchPermissionRequest()
                 }
             )
             isDialogShown.value = true
         }
+
         !permissionState.permissionRequested -> {
             // Launch a side effect that launches a permission request
             SideEffect {
@@ -48,7 +55,7 @@ fun RequestPermissions(
             }
         }
         // Permission permanently denied
-        !permissionState.hasPermission && !permissionState.shouldShowRationale -> {
+        permissionState.permissionRequested && !permissionState.hasPermission && !permissionState.shouldShowRationale -> {
             // Set location permission denied in repo
             setLocationPermissionDenied()
 

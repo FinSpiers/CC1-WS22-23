@@ -1,7 +1,6 @@
 package com.example.myweather.feature_weather.presentation
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -15,7 +14,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.myweather.R
-import com.example.myweather.feature_weather.presentation.permissions.RequestPermissions
+import com.example.myweather.feature_weather.presentation.permissions.CheckPermission
 import com.example.myweather.feature_weather.domain.util.TimestampDatetimeConverter
 import com.example.myweather.feature_weather.domain.util.WeatherMainMap
 import com.example.myweather.feature_weather.domain.util.WindDegreeConverter
@@ -30,8 +29,8 @@ import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 fun WeatherScreen(
     viewModel: WeatherViewModel = hiltViewModel()
 ) {
-    // Create and remember scrollState
-    val scrollState = rememberScrollState(0)
+    // Get scrollState by the scrollState
+    val scrollState = viewModel.scrollState
 
     // Get the state by the viewModel
     val state = viewModel.state.value
@@ -53,7 +52,7 @@ fun WeatherScreen(
     }
 
     // Check permission request
-    RequestPermissions(
+    CheckPermission(
         setLocationPermissionGranted = { viewModel.setLocationPermissionGranted() },
         setLocationPermissionDenied = { viewModel.setLocationPermissionDenied() }
     )
@@ -61,7 +60,6 @@ fun WeatherScreen(
     MyWeatherTheme {
         Surface(
             modifier = Modifier
-                .fillMaxSize()
         ) {
             SwipeRefresh(
                 state = swipeRefreshState,
@@ -79,7 +77,7 @@ fun WeatherScreen(
                         dateTime = state.weatherData?.let {
                             TimestampDatetimeConverter.convertToDatetime(
                                 it.timeStamp
-                            ).dropLast(3)
+                            )
                         }
                     )
                     state.weatherData?.let {
@@ -107,7 +105,6 @@ fun WeatherScreen(
                     Spacer(modifier = Modifier.height(100.dp))
                 }
             }
-
         }
     }
 }
