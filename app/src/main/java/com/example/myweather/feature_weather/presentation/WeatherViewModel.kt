@@ -125,11 +125,13 @@ class WeatherViewModel
                     // Request weather data from server
                     viewModelScope.launch(Dispatchers.IO) {
                         setWeatherDataFromServer()
+                        _isLoading.value = false
                     }
+                } else {
+                    _isLoading.value = false
                 }
             }
         }
-        _isLoading.value = false
     }
 
     private suspend fun setWeatherDataFromServer() {
